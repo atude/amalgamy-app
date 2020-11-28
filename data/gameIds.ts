@@ -4,10 +4,6 @@ export default [
         "name": "Among Us"
     },
     {
-        "appid": 12240,
-        "name": "Grand Theft Auto: Vice City"
-    },
-    {
         "appid": 12250,
         "name": "Grand Theft Auto: San Andreas"
     },
@@ -18,14 +14,6 @@ export default [
     {
         "appid": 12180,
         "name": "Grand Theft Auto 2"
-    },
-    {
-        "appid": 12219,
-        "name": "Grand Theft Auto IV"
-    },
-    {
-        "appid": 12230,
-        "name": "Grand Theft Auto III"
     },
     {
         "appid": 362003,

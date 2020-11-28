@@ -11,10 +11,13 @@ export const formatFriendsActivity = (friends: any) => {
       case 3:
         return `${friends[0].firstName}, ${friends[1].firstName} and ${friends[2].firstName} are playing this.`;
       default:
-        return `${friends[0].firstName}, ${friends[1].firstName} and ${
-          friends.length - 2
-        } other friends are playing this.`;
+        return `${friends[0].firstName}, ${friends[1].firstName} and ${friends.length - 2
+          } other friends are playing this.`;
     }
   }
   return "Recommended based on recent friend activity.";
 };
+
+export function hasKey<O>(obj: O, key: keyof any): key is keyof O {
+  return key in obj
+}
