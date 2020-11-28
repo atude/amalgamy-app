@@ -8,7 +8,7 @@ const consts = {
 export const styles = StyleSheet.create({
   textHeader: {
     fontSize: consts.headerFontSize,
-    fontWeight: "600",
+    fontWeight: "bold",
   },
   textWrapContainer: {
     flexDirection: "row",

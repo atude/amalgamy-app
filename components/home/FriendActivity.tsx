@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   gameName: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
   },
   activityTextContainer: {
     flex: 1,

@@ -121,6 +121,8 @@ function TabTwoNavigator() {
 const styles = StyleSheet.create({
   headerText: {
     ...GlobalStyles.styles.textHeader,
+    fontFamily: "sans-serif",
+    fontWeight: "700",
     paddingLeft: 4,
   },
   headerContainer: {
