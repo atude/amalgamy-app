@@ -9,12 +9,14 @@ import GlobalStyles from "../constants/GlobalStyles";
 import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import GamesHome from "../screens/GamesHome";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   BottomTabParamList,
   HomeParamList,
   ProfileParamList,
   TabTwoParamList,
+  GamesHomeParamList
 } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();

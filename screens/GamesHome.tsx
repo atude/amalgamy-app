@@ -1,8 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import axios from "axios";
-
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import gameIds from "../data/gameIds"
 
@@ -52,7 +50,7 @@ export default class GamesHome extends React.Component<GamesHomeProps, GamesHome
         })
     }
     componentDidMount() {
-        this.getAllGames();
+        // this.getAllGames();
     }
     render() {
         return (
@@ -63,7 +61,6 @@ export default class GamesHome extends React.Component<GamesHomeProps, GamesHome
                     lightColor="#eee"
                     darkColor="rgba(255,255,255,0.1)"
                 />
-                <EditScreenInfo path="/screens/TabOneScreen.js" />
             </View>
         )
     }
