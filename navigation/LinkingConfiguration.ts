@@ -16,6 +16,11 @@ export default {
               TabTwoScreen: 'two',
             },
           },
+          Games: {
+            screens: {
+              GamesHome: 'games home',
+            },
+          },
         },
       },
       NotFound: '*',
