@@ -94,7 +94,9 @@ function GamesNavigator() {
       <GamesStack.Screen
         name="GamesHome"
         component={GamesHome}
-        options={{ headerTitle: "Tab Two Title" }}
+        options={{
+          headerTitle: "Games"
+        }}
       />
     </GamesStack.Navigator>
   );
