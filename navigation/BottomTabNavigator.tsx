@@ -9,12 +9,14 @@ import GlobalStyles from "../constants/GlobalStyles";
 import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import GamesHome from "../screens/GamesHome";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   BottomTabParamList,
   HomeParamList,
   ProfileParamList,
   TabTwoParamList,
+  GamesHomeParamList
 } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -51,6 +53,15 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="md-person" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Games"
+        component={GamesNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
           ),
         }}
       />
@@ -115,6 +126,21 @@ function TabTwoNavigator() {
         options={{ headerTitle: "Tab Two Title" }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+const GamesStack = createStackNavigator<GamesHomeParamList>();
+
+function GamesNavigator() {
+  return (
+    <GamesStack.Navigator>
+      <GamesStack.Screen
+        name="GamesHome"
+        component={GamesHome}
+        options={{
+          headerTitle: "Games"
+        }}
+      />
+    </GamesStack.Navigator>
   );
 }
 

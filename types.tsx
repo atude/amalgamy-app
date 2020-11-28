@@ -7,6 +7,7 @@ export type BottomTabParamList = {
   Home: undefined;
   Profile: undefined;
   TabTwo: undefined;
+  Games: undefined;
 };
 
 export type HomeParamList = {
@@ -19,4 +20,7 @@ export type ProfileParamList = {
 
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
+};
+export type GamesHomeParamList = {
+  GamesHome: undefined;
 };
