@@ -2,13 +2,20 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 
 import Colors from "../constants/Colors";
+import GlobalStyles from "../constants/GlobalStyles";
 import useColorScheme from "../hooks/useColorScheme";
-import TabOneScreen from "../screens/TabOneScreen";
+import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
-import GamesHome from "../screens/GamesHome";
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, GamesHomeParamList } from "../types";
+import {
+  BottomTabParamList,
+  HomeParamList,
+  ProfileParamList,
+  TabTwoParamList,
+} from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -17,15 +24,15 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      initialRouteName="Home"
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].primary }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Home"
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="md-home" color={color} />
           ),
         }}
       />
@@ -35,6 +42,15 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="md-person" color={color} />
           ),
         }}
       />
@@ -59,17 +75,41 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const HomeStack = createStackNavigator<HomeParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: "Tab One Title" }}
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          headerTitle: "For You",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
       />
-    </TabOneStack.Navigator>
+    </HomeStack.Navigator>
+  );
+}
+
+const ProfileStack = createStackNavigator<ProfileParamList>();
+
+function ProfileNavigator() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          headerTitle: "Profile",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+    </ProfileStack.Navigator>
   );
 }
 
@@ -101,3 +141,15 @@ function GamesNavigator() {
     </GamesStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  headerText: {
+    ...GlobalStyles.styles.textHeader,
+    fontFamily: "sans-serif",
+    fontWeight: "700",
+    paddingLeft: 4,
+  },
+  headerContainer: {
+    height: 120,
+  },
+});
