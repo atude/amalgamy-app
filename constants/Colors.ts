@@ -31,6 +31,7 @@ const Colors: Record<string, ColorScheme> = {
     lightgrey3: "#F1F3F5",
     yellow: "#EECA74",
     red: "#CC4039",
+    purpleText: "#7442C8",
   },
   dark: {
     text: "#000",
@@ -46,6 +47,7 @@ const Colors: Record<string, ColorScheme> = {
     lightgrey3: "#F1F3F5",
     yellow: "#EECA74",
     red: "#CC4039",
+    purpleText: "#7442C8",
   },
 };
 
