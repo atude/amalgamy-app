@@ -6,7 +6,7 @@ import Colors from "../constants/Colors";
 interface IHollowButtonProps {
   onPress: any;
   text: string;
-  // icon: any;
+  icon: string;
 }
 
 const HollowButton: React.FC<IHollowButtonProps> = (
@@ -18,6 +18,7 @@ const HollowButton: React.FC<IHollowButtonProps> = (
       <View
         style={[styles.container, { borderColor: Colors[colorScheme].primary }]}
       >
+        {/* {if (props)} */}
         <Text style={[styles.text, { color: Colors[colorScheme].primary }]}>
           {props.text}
         </Text>

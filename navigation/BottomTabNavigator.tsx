@@ -35,6 +35,7 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].primary }}
+      // style={styles.bottomNav}
     >
       <BottomTab.Screen
         name="Home"
@@ -194,4 +195,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: 120,
   },
+  // bottomNav: {
+  //   height: 68,
+  // },
 });
