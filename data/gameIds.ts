@@ -4,6 +4,10 @@ export default [
         "name": "Among Us"
     },
     {
+        "appid": 1091500,
+        "name": "Cyberpunk 2077"
+    },
+    {
         "appid": 12250,
         "name": "Grand Theft Auto: San Andreas"
     },
@@ -16,7 +20,7 @@ export default [
         "name": "Grand Theft Auto 2"
     },
     {
-        "appid": 362003,
+        "appid": 271590,
         "name": "Grand Theft Auto V"
     },
     {
