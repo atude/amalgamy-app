@@ -29,13 +29,14 @@ export type Genre =
   | "etc";
 
 export type AccessibilityFeature =
-  | "feature 1"
-  | "feature 1"
-  | "feature 1"
-  | "feature 1"
-  | "feature 1"
-  | "feature 1"
-  | "feature 1";
+  | "Colourblind Support"
+  | "Zoom Options"
+  | "High Contrast Colour Scheme"
+  | "Font Size Options"
+  | "Subtitles"
+  | "Direct Voice Input"
+  | "Switch Controller Mode"
+  | "Eye Tracker Mode";
 
 export type Group = {
   name: string;
@@ -46,15 +47,20 @@ export type Group = {
 export type Game = {
   name: string;
   desc: string;
+  icon: string;
   media?: string[];
-  url?: string;
+  url?: {
+    pc?: string;
+    ios?: string;
+    android?: string;
+  };
   publisher: string;
   playersAmount?: {
     min?: number;
     max?: number;
   };
   devices: Device[];
-  genres: Genre[];
+  genres: string[];
   accessibilityFeatures: AccessibilityFeature[];
   rating?: number;
 };

@@ -10,7 +10,8 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesHome from "../screens/GamesHome";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import GamePage from "../screens/GamePage";
+// import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   BottomTabParamList,
   HomeParamList,
@@ -28,6 +29,7 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].primary }}
+      // style={styles.bottomNav}
     >
       <BottomTab.Screen
         name="Home"
@@ -39,7 +41,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Among Us"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -119,11 +121,16 @@ const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {
   return (
-    <TabTwoStack.Navigator>
+    <TabTwoStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: "Tab Two Title" }}
+        name="Among Us"
+        // options={{ header: null }}
+        component={GamePage}
+        // options={{ headerTitle: "Tab Two Title" }}
       />
     </TabTwoStack.Navigator>
   );
@@ -154,4 +161,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: 120,
   },
+  // bottomNav: {
+  //   height: 68,
+  // },
 });

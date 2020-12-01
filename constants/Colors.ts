@@ -14,6 +14,7 @@ type ColorScheme = {
   lightgrey3: string;
   yellow: string;
   red: string;
+  purpleText: string;
 };
 
 const Colors: Record<string, ColorScheme> = {
