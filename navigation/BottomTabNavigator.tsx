@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/stack";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
-
+import { dummyGame } from "../screens/GPDummyData";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
 import useColorScheme from "../hooks/useColorScheme";
