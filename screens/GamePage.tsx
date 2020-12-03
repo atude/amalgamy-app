@@ -1,40 +1,53 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-
+import { StyleSheet, Image } from "react-native";
+import { Game } from "../types/index";
+import { Ionicons } from "@expo/vector-icons";
 import HollowButton from "../components/HollowButton";
 import { Text, View, ScrollableLayout } from "../components/Themed";
-import {} from "../components/Themed";
+import { dummyGame } from "./GPDummyData";
 
-const dummyGame = {
-  name: "Among Us",
-  desc:
-    "Prep your spaceship for departure, but beware as one will be an impostor bent on killing everyone!",
-  icon:
-    "https://static.wikia.nocookie.net/among-us-wiki/images/8/89/Hide_n_seek_icon.png/revision/latest?cb=20200928163901",
-  media: [
-    "https://sm.ign.com/t/ign_ap/screenshot/default/sc5kzr-1600944611079_pgq3.1080.jpg",
-    "https://sm.ign.com/t/ign_ap/gallery/a/among-us-s/among-us-screenshots_c34s.1080.jpg",
-  ],
-  url: {
-    pc: "https://store.steampowered.com/app/945360/Among_Us/",
-    ios: "https://apps.apple.com/us/app/among-us/id1351168404",
-    android:
-      "https://play.google.com/store/apps/details?id=com.innersloth.spacemafia&hl=en_AU&gl=US",
-  },
-  publisher: "Innersloth LLC",
-  playersAmount: {
-    min: 4,
-    max: 10,
-  },
-  devices: ["Windows Computer", "Mac Computer", "Linux Computer"],
-  genres: ["Action", "Party"],
-  accessbilityFeatures: ["Colourblind Support", "High Contrast Colour Scheme"],
-  rating: 78,
-};
-export default function GamePage() {
+interface IGamePageProps {
+  gameInfo: Game;
+}
+
+export default function GamePage(props: IGamePageProps) {
   return (
     <ScrollableLayout style={styles.scrollContainer}>
-      <Text> dwadklawml</Text>
+      <Image
+        style={styles.icon}
+        source={{
+          uri: dummyGame.icon,
+        }}
+      />
+      <Text>{dummyGame.name}</Text>
+
+      <Text>{dummyGame.genres.join(" | ")}</Text>
+      <Text>{dummyGame.publisher}</Text>
+      <Ionicons name="md-bookmark" style={styles.topButton} size={32}>
+        {" "}
+      </Ionicons>
+      <Ionicons name="ios-share" style={styles.topButton} size={32}>
+        {" "}
+      </Ionicons>
+
+      <Text>
+        {dummyGame.playersAmount.min} - {dummyGame.playersAmount.max} players
+      </Text>
+      <Text>{dummyGame.desc}</Text>
+      {dummyGame.media.map((link) => (
+        <Image
+          style={styles.media}
+          key={link}
+          source={{
+            uri: link,
+          }}
+        />
+      ))}
+      <Text>Platforms</Text>
+      <Text>You May Like</Text>
+
+      {/* <Text>Reviews</Text> */}
+
       {/* <View style={styles.button}> */}
       {/* <HollowButton
                     onPress={() => {
@@ -66,4 +79,17 @@ const styles = StyleSheet.create({
   //     height: 1,
   //     width: "80%",
   // },
+  icon: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+  },
+  media: {
+    width: 200,
+    height: 130,
+    borderRadius: 8,
+  },
+  topButton: {
+    color: "purple",
+  },
 });

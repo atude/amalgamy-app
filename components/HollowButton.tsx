@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
+import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../constants/Colors";
 interface IHollowButtonProps {
