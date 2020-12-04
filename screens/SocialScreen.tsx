@@ -5,12 +5,12 @@ import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { AppContext } from "../context";
 
-const TabTwoScreen = () => {
+const SocialScreen = () => {
   const context = useContext(AppContext);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two - {context.check}</Text>
+      <Text style={styles.title}>Social - {context.check}</Text>
     </View>
   );
 };
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabTwoScreen;
+export default SocialScreen;

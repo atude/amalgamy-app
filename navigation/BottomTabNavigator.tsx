@@ -10,14 +10,15 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesHome from "../screens/GamesHome";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import TabTwoScreen from "../screens/SocialScreen";
 import {
   BottomTabParamList,
   HomeParamList,
   ProfileParamList,
-  TabTwoParamList,
-  GamesHomeParamList
+  GamesHomeParamList,
+  SocialParamList,
 } from "../types";
+import SocialScreen from "../screens/SocialScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -39,11 +40,20 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Games"
+        component={GamesNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="logo-game-controller-b" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Social"
+        component={SocialNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="md-people" color={color} />
           ),
         }}
       />
@@ -53,15 +63,6 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="md-person" color={color} />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="Games"
-        component={GamesNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
           ),
         }}
       />
@@ -96,6 +97,25 @@ function HomeNavigator() {
   );
 }
 
+const SocialStack = createStackNavigator<SocialParamList>();
+
+function SocialNavigator() {
+  return (
+    <SocialStack.Navigator>
+      <SocialStack.Screen
+        name="SocialScreen"
+        component={SocialScreen}
+        options={{
+          headerTitle: "Friends & Groups",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+    </SocialStack.Navigator>
+  );
+}
+
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
 function ProfileNavigator() {
@@ -115,19 +135,6 @@ function ProfileNavigator() {
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: "Tab Two Title" }}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
 const GamesStack = createStackNavigator<GamesHomeParamList>();
 
 function GamesNavigator() {
@@ -137,7 +144,10 @@ function GamesNavigator() {
         name="GamesHome"
         component={GamesHome}
         options={{
-          headerTitle: "Games"
+          headerTitle: "Games",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
         }}
       />
     </GamesStack.Navigator>
