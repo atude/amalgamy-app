@@ -4,7 +4,6 @@ import { Text, View } from "../Themed";
 import ProfileMenuItem from "./ProfileMenuItem";
 import { Option } from "../../types/index";
 
-
 type Props = {
   options: Option[];
   title?: string;
@@ -16,11 +15,7 @@ export const ProfileMenuWrapper = (props: Props) => {
     <View style={styles.menuContainer}>
       {title && <Text>{title}</Text>}
       {options.map((option, i) => (
-        <ProfileMenuItem
-          optionText={option.optionText}
-          pageLink={option.pageLink}
-          key={i}
-        />
+        <ProfileMenuItem option={option} key={i} />
       ))}
     </View>
   );
