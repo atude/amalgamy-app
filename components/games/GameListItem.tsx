@@ -3,14 +3,14 @@ import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../constants/GlobalStyles";
 import { Text, View } from "../Themed";
-import { Genre } from "../../types/index";
+// import { Genre } from "../../types/index";
 import layout from "../../constants/ScreenLayout";
 
 type Props = {
   gameId: string;
   gameName: string;
   gameImage: string;
-  genres: genre[];
+  genres: Genre[];
 };
 
 type Genre = {

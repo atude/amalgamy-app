@@ -23,6 +23,7 @@ import {
   SocialParamList,
 } from "../types/navigation";
 import SocialScreen from "../screens/SocialScreen";
+import ChatScreen from "../screens/social/ChatScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -109,6 +110,16 @@ function SocialNavigator() {
       <SocialStack.Screen
         name="SocialScreen"
         component={SocialScreen}
+        options={{
+          headerTitle: "Friends & Groups",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <SocialStack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
         options={{
           headerTitle: "Friends & Groups",
           headerTitleAlign: "left",

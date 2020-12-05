@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "prettier": "prettier --write '**/*.{ts,json,js,tsx,graphql,md,yml,yaml,json}'"
   },
   "jest": {
     "preset": "jest-expo"

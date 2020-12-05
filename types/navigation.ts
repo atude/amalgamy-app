@@ -20,8 +20,10 @@ export type GamesHomeParamList = {
 
 export type SocialParamList = {
   SocialScreen: undefined;
+  ChatScreen: undefined;
 };
 
 export type ProfileParamList = {
   ProfileScreen: undefined;
+  AccountScreen: undefined;
 };

@@ -24,5 +24,11 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "react/display-name": 0,
     "react/prop-types": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
 };
