@@ -1,22 +1,25 @@
+import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
-import { useContext } from "react";
 import { StyleSheet, TextInput, useColorScheme } from "react-native";
 
 import { Layout, Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
-import { AppContext } from "../context";
 import { ColorScheme } from "../types";
 
 const SocialScreen = () => {
-  const context = useContext(AppContext);
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? "light";
   const styles = createStyles(colorScheme);
 
   return (
     <Layout>
-      <View style={styles.searchHeader}>
-        <TextInput style={styles.searchBar} inlineImageLeft="search_icon" />
+      <View style={styles.searchBar}>
+        <TextInput style={styles.searchInput} />
+        <Ionicons
+          name="ios-search"
+          size={20}
+          color={Colors[colorScheme].grey2}
+        />
       </View>
     </Layout>
   );
@@ -28,11 +31,17 @@ const createStyles = (colorScheme: ColorScheme) =>
       fontSize: 20,
       fontWeight: "bold",
     },
-    searchHeader: {},
     searchBar: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
       backgroundColor: Colors[colorScheme].lightgrey3,
       borderRadius: 20,
-      padding: 12,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+    },
+    searchInput: {
+      width: "85%",
     },
   });
 
