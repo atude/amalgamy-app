@@ -8,7 +8,7 @@ type ColorScheme = {
   bg: string;
   subheader: string;
   header: string;
-  
+
   // Temp names for now
   grey2: string;
   lightgrey3: string;
@@ -18,7 +18,7 @@ type ColorScheme = {
   darkgrey: string;
 };
 
-const Colors: Record<string, ColorScheme> = {
+const Colors: Record<"light" | "dark", ColorScheme> = {
   light: {
     text: "#000",
     background: "#fff",
