@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Modal, Animated } from "react-native";
 import axios from "axios";
 import { Text, View } from "../components/Themed";
 import gameIds from "../data/gameIds";
@@ -9,6 +9,7 @@ import { ButtonGroup } from "react-native-elements";
 import layout from "../constants/ScreenLayout";
 import Colors from "../constants/Colors";
 import FiltersIcon from "../components/games/FiltersIcon";
+import FiltersBottomSheet from "../components/games/FiltersBottomSheet";
 
 type ExtractedGameData = {
   name: string;
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   container: {
-    marginTop:30,
+    marginTop: 30,
   },
   title: {
     fontSize: 20,
