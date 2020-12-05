@@ -2,8 +2,8 @@ export type ColorScheme = "light" | "dark";
 
 export type User = {
   email: string;
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   avatar?: string;
   devices?: Device[];
   genres?: Genre[];
@@ -48,6 +48,7 @@ export type Group = {
 };
 
 export type Game = {
+  id: string;
   name: string;
   desc: string;
   media?: string[];

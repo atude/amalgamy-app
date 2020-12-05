@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 import { ProfileMenuWrapper } from "../components/profile/ProfileMenuWrapper";
 import { Option } from "../types/index";
 
-
 const DUMMY_PROFILE = {
   firstName: "Mozamel",
   lastName: "Anwary",

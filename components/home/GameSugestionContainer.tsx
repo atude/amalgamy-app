@@ -1,30 +1,8 @@
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { DUMMY_GAMES } from "../../data/_dummyData";
 import { Button, Text, View } from "../Themed";
 import GameSuggestion from "./GameSuggestion";
-
-const DUMMY_GAMES = [
-  {
-    id: "1",
-    name: "yes",
-  },
-  {
-    id: "2",
-    name: "random",
-  },
-  {
-    id: "3",
-    name: "game",
-  },
-  {
-    id: "4",
-    name: "awesome a very long game name yes cool beans",
-  },
-  {
-    id: "5",
-    name: "cool",
-  },
-];
 
 const GameSuggestionContainer = () => {
   return (
