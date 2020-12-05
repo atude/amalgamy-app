@@ -7,19 +7,30 @@ import Colors from "../constants/Colors";
 interface IHollowButtonProps {
   onPress: any;
   text: string;
-  icon: string;
+  icon?: string;
 }
 
 const HollowButton: React.FC<IHollowButtonProps> = (
   props: IHollowButtonProps,
 ) => {
   const colorScheme = useColorScheme();
+  let icon;
+
+  if (props.icon) {
+    icon = (
+      <Ionicons
+        name={props.icon}
+        style={[{ color: Colors[colorScheme].primary }]}
+        size={20}
+      />
+    );
+  }
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View
         style={[styles.container, { borderColor: Colors[colorScheme].primary }]}
       >
-        {/* {if (props)} */}
+        {icon}
         <Text style={[styles.text, { color: Colors[colorScheme].primary }]}>
           {props.text}
         </Text>
@@ -40,5 +51,6 @@ const styles = StyleSheet.create({
     maxHeight: 30,
   },
   text: { fontSize: 14 },
+  icon: {},
 });
 export default HollowButton;
