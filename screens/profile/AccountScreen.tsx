@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ProfileAvatar } from "../../components/profile/ProfileAvatar";
 import ProfileMenuItem from "../../components/profile/ProfileMenuItem";
-import { Layout, Text, View } from "../../components/Themed";
+import { Layout, ScrollableLayout, Text, View } from "../../components/Themed";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { types } from "@babel/core";
 import { User } from "../../types";
@@ -16,30 +16,67 @@ const DUMMY_PROFILE = {
   genres: ["yes", "indeed"],
 };
 
-const OPTIONS = [
+const UserInfo = [
   {
     optionText: "Username",
-    link: "askldfj",
+    link: "ChangeUsernameScreen",
+    valueText: "cyberscopes",
   },
   {
     optionText: "Email",
-    link: "askldfj",
+    link: "ChangeEmailScreen",
+    valueText: "atude@cyberscopic.net",
   },
   {
     optionText: "Change Password",
-    link: "askldfj",
+    link: "ChangePasswordScreen",
   },
   {
     optionText: "Two-Factor Authentication",
-    link: "askldfj",
+    link: "TwoFactorAuthScreen",
+  },
+];
+
+const RecPrefs = [
+  {
+    optionText: "Devices and Platforms",
+    link: "DevicesScreen",
+  },
+  {
+    optionText: "Accessiblity",
+    link: "AccessibilityScreen",
+  },
+  {
+    optionText: "Genre",
+    link: "GenreScreen",
+  },
+  {
+    optionText: "Languages",
+    link: "LanguagesScreen",
+  },
+];
+
+const Privacy = [
+  {
+    optionText: "Data Usage",
+    link: "DataUsageScreen",
+  },
+  {
+    optionText: "Privacy Policy",
+    link: "PrivacyPolicyScreen",
   },
 ];
 
 export default function AccountScreen() {
   return (
-    <Layout>
-      <ProfileMenuWrapper options={OPTIONS} title={"User Information"} />
-    </Layout>
+    <ScrollableLayout>
+      <ProfileMenuWrapper options={UserInfo} title={"User Information"} topPadding={true} />
+      <ProfileMenuWrapper
+        options={RecPrefs}
+        title={"Recommendation Preferences"}
+      />
+      <ProfileMenuWrapper options={Privacy} title={"Privacy and Data"} />
+    </ScrollableLayout>
   );
 }
 

@@ -67,5 +67,6 @@ export type Game = {
 export type Option = {
   optionText: string;
   icon?: string;
+  valueText?: string;
   pageLink: string;
 };
