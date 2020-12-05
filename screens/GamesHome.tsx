@@ -7,6 +7,8 @@ import { hasKey } from "../utils/index";
 import GameListItem from "../components/games/GameListItem";
 import { ButtonGroup } from "react-native-elements";
 import layout from "../constants/ScreenLayout";
+import Colors from "../constants/Colors";
+import FiltersIcon from "../components/games/FiltersIcon";
 
 type ExtractedGameData = {
   name: string;
@@ -19,8 +21,9 @@ type ExtractedGameData = {
 type GamesHomeProps = Record<string, unknown>;
 
 type GamesHomeState = {
+  allGames: Record<string, unknown>[];
   recommendedGames: Record<string, unknown>[];
-  trendingGames: Record<string, unknown>[];
+  featuredGames: Record<string, unknown>[];
   topSellingGames: Record<string, unknown>[];
   selectedIndex: number;
 };
@@ -32,8 +35,9 @@ export default class GamesHome extends React.Component<
   constructor(props: GamesHomeProps) {
     super(props);
     this.state = {
+      allGames: [],
       recommendedGames: [],
-      trendingGames: [],
+      featuredGames: [],
       topSellingGames: [],
       selectedIndex: 1,
     };
@@ -48,50 +52,95 @@ export default class GamesHome extends React.Component<
         .get(
           `http://store.steampowered.com/api/appdetails?appids=${appId}&cc=au&l=en`,
         )
-        .then((res) => {
-          if (!this.extractStatus(res.data)) {
-            console.log(`failed: ${appId}`);
-          } else {
+        .then(
+          (res) => {
+            if (!this.extractStatus(res.data)) {
+              console.log(`failed: ${appId}`);
+            } else {
+              this.setState(
+                {
+                  allGames: [
+                    ...this.state.allGames,
+                    this.extractGameRequestData(res.data),
+                  ],
+                },
+                () => {
+                  resolve(res);
+                },
+              );
+            }
+          },
+          (reason) => {
+            console.log(appId, reason);
+          },
+        )
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
+  getFeaturedGames = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`http://store.steampowered.com/api/featuredcategories/`)
+        .then(
+          (res) => {
             this.setState(
               {
-                recommendedGames: [
-                  ...this.state.recommendedGames,
-                  this.extractGameRequestData(res.data),
-                ],
+                featuredGames: res.data.specials.items,
+                topSellingGames: res.data.top_sellers.items,
               },
               () => {
-                resolve(res);
+                console.log(res.data.top_sellers.items);
+                resolve(res.data.top_sellers);
               },
             );
-          }
-        })
+          },
+          (reason) => {
+            console.log(reason);
+          },
+        )
         .catch((err) => {
           reject(err);
         });
     });
   };
   getAllGames = () => {
-    // return new Promise((resolve, reject) => {
-    //     axios.get(`http://store.steampowered.com/api/appdetails?appids=12170&cc=au&l=en`)
-    //         .then((res) => {
-    //             this.setState({
-    //                 recommendedGames: [this.extractGameRequestData(res.data)]
-    //             }, () => {
-    //                 resolve(res)
-    //             })
-
-    //         })
-    //         .catch((err) => {
-    //             reject(err)
-    //         })
-    // })
     const allGamePromises = gameIds.map((game) => {
       return this.getGameDetails(game.appid);
     });
     Promise.all(allGamePromises);
   };
+  featuredGamesList = () => {
+    if (!this.state.featuredGames) return;
+    return this.state.featuredGames.map((game: any, index) => {
+      return (
+        <GameListItem
+          key={index}
+          gameId={game.id}
+          gameName={game.name}
+          gameImage={game.small_capsule_image}
+          genres={game.genres}
+        />
+      );
+    });
+  };
+  topSellingGamesList = () => {
+    if (!this.state.topSellingGames) return;
+    return this.state.topSellingGames.map((game: any, index) => {
+      return (
+        <GameListItem
+          key={index}
+          gameId={game.id}
+          gameName={`${index + 1}. ${game.name}`}
+          gameImage={game.small_capsule_image}
+          genres={game.genres}
+        />
+      );
+    });
+  };
   recommendedGamesList = () => {
-    return this.state.recommendedGames.map((game: any, index) => {
+    return this.state.allGames.map((game: any, index) => {
       // let [appId, res] = game;
       // let data = res[appId].data;
       if (game.name === "failed") {
@@ -134,21 +183,45 @@ export default class GamesHome extends React.Component<
   };
   componentDidMount() {
     this.getAllGames();
+    this.getFeaturedGames();
   }
   render() {
-    const buttons = ["Hello", "World", "Buttons"];
+    const buttons = ["Recommended", "Top Selling", "Featured"];
     const { selectedIndex } = this.state;
     return (
       <View>
-        <ButtonGroup
-          onPress={this.updateIndex}
-          selectedIndex={selectedIndex}
-          buttons={buttons}
-          containerStyle={{ height: 100 }}
-        />
+        <View style={styles.tabButtonsContainer}>
+          <ButtonGroup
+            onPress={this.updateIndex}
+            selectedIndex={selectedIndex}
+            buttons={buttons}
+            containerStyle={{
+              height: 30,
+              borderRadius: 15,
+              width: layout.window.width - 60,
+            }}
+            textStyle={{
+              color: "black",
+            }}
+            buttonContainerStyle={{
+              backgroundColor: Colors.light.lightgrey2,
+            }}
+            innerBorderStyle={{
+              color: "transparent",
+            }}
+            selectedButtonStyle={{
+              backgroundColor: Colors.light.darkgrey,
+              borderRadius: 100,
+            }}
+          />
+          <FiltersIcon></FiltersIcon>
+        </View>
         <ScrollView style={styles.container}>
-          <View lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-          {this.recommendedGamesList()}
+          {this.state.selectedIndex === 0
+            ? this.recommendedGamesList()
+            : this.state.selectedIndex == 1
+            ? this.topSellingGamesList()
+            : this.featuredGamesList()}
         </ScrollView>
       </View>
     );
@@ -156,7 +229,16 @@ export default class GamesHome extends React.Component<
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  tabButtonsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    width: layout.window.width,
+    alignItems: "center",
+    marginTop: 30,
+  },
+  container: {
+    marginTop:30,
+  },
   title: {
     fontSize: 20,
     fontWeight: "bold",

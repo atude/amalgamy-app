@@ -3,22 +3,21 @@ import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../constants/GlobalStyles";
 import { Text, View } from "../Themed";
-// import { Genre } from "../../types/index";
 import layout from "../../constants/ScreenLayout";
 
 type Props = {
   gameId: string;
   gameName: string;
   gameImage: string;
-  genres: Genre[];
+  genres?: GameGenre[];
 };
 
-type Genre = {
+type GameGenre = {
   description: string;
   id: string;
 };
 
-function processGenres(genres: Genre[]): string {
+function processGenres(genres: GameGenre[]): string {
   let string = "";
   genres.forEach((genre) => {
     string += `${genre.description}, `;
@@ -40,7 +39,7 @@ const GameListItem = (props: Props) => {
           <Text style={styles.gameName}>{gameName}</Text>
           <View style={GlobalStyles.styles.textWrapContainer}>
             <Text style={GlobalStyles.styles.textWrap}>
-              {processGenres(genres)}
+              {genres ? processGenres(genres) : <></>}
             </Text>
           </View>
         </View>
@@ -55,19 +54,19 @@ export default GameListItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
-    padding: 14,
+    alignItems: "flex-start",
+    padding: 15,
     width: layout.window.width,
   },
   gameImage: {
-    width: 80,
-    height: 80,
+    width: 55,
+    height: 55,
     resizeMode: "cover",
     borderRadius: GlobalStyles.consts.borderRadius,
   },
   gameName: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   activityTextContainer: {
     flex: 1,
