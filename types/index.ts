@@ -1,7 +1,9 @@
+export type ColorScheme = "light" | "dark";
+
 export type User = {
   email: string;
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   avatar?: string;
   devices?: Device[];
   genres?: Genre[];
@@ -23,6 +25,8 @@ export type Device =
 export type Genre =
   | "Adventure"
   | "RPG"
+  | "Action"
+  | "Casual"
   | "example 1"
   | "example 2"
   | "example 3"
@@ -45,7 +49,7 @@ export type Group = {
 };
 
 export type Game = {
-  id: num;
+  id: string;
   name: string;
   desc: string;
   icon: string;
@@ -64,4 +68,16 @@ export type Game = {
   genres: string[];
   accessibilityFeatures: AccessibilityFeature[];
   rating?: number;
+};
+
+export type Option = {
+  optionText: string;
+  icon?: string;
+  valueText?: string;
+  pageLink: string;
+};
+
+export type SubMenu = {
+  title: string;
+  optionList: Array<Option>;
 };
