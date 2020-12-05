@@ -70,3 +70,8 @@ export type Option = {
   valueText?: string;
   pageLink: string;
 };
+
+export type SubMenu = {
+  title: string;
+  optionList: Array<Option>;
+};

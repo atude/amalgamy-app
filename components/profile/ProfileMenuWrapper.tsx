@@ -7,15 +7,15 @@ import { Option } from "../../types/index";
 type Props = {
   options: Option[];
   title?: string;
-  topPadding?: boolean;
+  firstItem?: boolean;
 };
 
 export const ProfileMenuWrapper = (props: Props) => {
-  const { options, title, topPadding } = props;
+  const { options, title, firstItem } = props;
   return (
     <View style={styles.menuContainer}>
       {title && (
-        <Text style={topPadding ? styles.title2 : styles.title}>{title}</Text>
+        <Text style={firstItem ? styles.title2 : styles.title}>{title}</Text>
       )}
       {options.map((option, i) => (
         <ProfileMenuItem option={option} key={i} />
