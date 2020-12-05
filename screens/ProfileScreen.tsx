@@ -15,24 +15,28 @@ const OPTIONS: Option[] = [
   {
     optionText: "Account",
     pageLink: "AccountScreen",
+    icon: "md-settings"
   },
   {
     optionText: "Connected Services",
-    pageLink: "askldfj",
+    pageLink: "Services",
+    icon: "md-git-branch"
   },
   {
     optionText: "Saved Games",
-    pageLink: "askldfj",
+    pageLink: "SavedGames",
+    icon: "md-bookmarks"
   },
   {
     optionText: "Reviews",
-    pageLink: "askldfj",
+    pageLink: "Reviews",
+    icon: "md-star"
   },
 ];
 
 export default function ProfileHome() {
   return (
-    <Layout>
+    <Layout style={styles.container}>
       <ProfileAvatar
         firstName={DUMMY_PROFILE.firstName}
         lastName={DUMMY_PROFILE.lastName}
@@ -44,8 +48,7 @@ export default function ProfileHome() {
 }
 
 const styles = StyleSheet.create({
-  menuContainer: {
-    flex: 1,
+  container: {
     alignContent: "flex-start",
   },
 });

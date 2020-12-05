@@ -37,14 +37,12 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.primary,
   },
   username: {
-    flex: 1,
     alignSelf: "center",
     textAlign: "center",
     padding: 15,
-    fontSize: 35,
+    fontSize: 30,
   },
   container: {
-    flex: 1,
     justifyContent: "center",
   },
 });

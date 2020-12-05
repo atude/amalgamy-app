@@ -67,5 +67,11 @@ export type Game = {
 export type Option = {
   optionText: string;
   icon?: string;
+  valueText?: string;
   pageLink: string;
+};
+
+export type SubMenu = {
+  title: string;
+  optionList: Array<Option>;
 };

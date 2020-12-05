@@ -4,22 +4,23 @@ import { Button, Text, View } from "../Themed";
 import Colors from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { Option } from "../../types/index";
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   option: Option;
 };
 
 const ProfileMenuItem = (props: Props) => {
-  const { optionText, pageLink } = props.option;
+  const { optionText, pageLink, icon, valueText } = props.option;
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={() => navigation.navigate(pageLink)}>
       <View style={styles.container}>
-        <Text style={styles.itemText}>{optionText}</Text>
-        <Image
-          style={styles.image}
-          source={require("../../assets/images/icon.png")}
-        />
+        <Text style={styles.optionText}>{optionText}</Text>
+        <View style={styles.iconContainer}>
+          {icon && <Ionicons name={icon} size={20} color="black" />}
+        </View>
+        {valueText && <Text style={styles.valueText}>{valueText}</Text>}
       </View>
     </TouchableOpacity>
   );
@@ -33,16 +34,17 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.lightgrey3,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  itemText: {
-    alignSelf: "flex-start",
-    fontSize: 30,
     padding: 12,
   },
-  image: {
+  optionText: {
+    alignSelf: "flex-start",
+  },
+  valueText: {
+    alignSelf: "flex-start",
+    color: Colors.light.grey2,
+  },
+  iconContainer: {
     alignSelf: "center",
-    width: 30,
-    height: 30,
     alignItems: "flex-end",
   },
 });

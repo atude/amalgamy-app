@@ -1,11 +1,12 @@
 import * as React from "react";
 import { ProfileAvatar } from "../../components/profile/ProfileAvatar";
 import ProfileMenuItem from "../../components/profile/ProfileMenuItem";
-import { Layout, Text, View } from "../../components/Themed";
+import { Layout, ScrollableLayout, Text, View } from "../../components/Themed";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { types } from "@babel/core";
-import { User } from "../../types";
+import { SubMenu, User, Option } from "../../types";
 import { ProfileMenuWrapper } from "../../components/profile/ProfileMenuWrapper";
+import ProfileMenuSet from "../../components/profile/ProfileMenuSet";
 
 const DUMMY_PROFILE = {
   firstName: "Mozamel",
@@ -16,31 +17,74 @@ const DUMMY_PROFILE = {
   genres: ["yes", "indeed"],
 };
 
-const OPTIONS = [
+const UserInfo = [
   {
     optionText: "Username",
-    link: "askldfj",
+    pageLink: "ChangeUsernameScreen",
+    valueText: "cyberscopes",
   },
   {
     optionText: "Email",
-    link: "askldfj",
+    pageLink: "ChangeEmailScreen",
+    valueText: "atude@cyberscopic.net",
   },
   {
     optionText: "Change Password",
-    link: "askldfj",
+    pageLink: "ChangePasswordScreen",
   },
   {
     optionText: "Two-Factor Authentication",
-    link: "askldfj",
+    pageLink: "TwoFactorAuthScreen",
+  },
+];
+
+const RecPrefs: Array<Option> = [
+  {
+    optionText: "Devices and Platforms",
+    pageLink: "DevicesScreen",
+  },
+  {
+    optionText: "Accessiblity",
+    pageLink: "AccessibilityScreen",
+  },
+  {
+    optionText: "Genre",
+    pageLink: "GenreScreen",
+  },
+  {
+    optionText: "Languages",
+    pageLink: "LanguagesScreen",
+  },
+];
+
+const Privacy = [
+  {
+    optionText: "Data Usage",
+    pageLink: "DataUsageScreen",
+  },
+  {
+    optionText: "Privacy Policy",
+    pageLink: "PrivacyPolicyScreen",
+  },
+];
+
+const menus: Array<SubMenu> = [
+  {
+    title: "User Information",
+    optionList: UserInfo,
+  },
+  {
+    title: "Recommendation Preferences",
+    optionList: RecPrefs,
+  },
+  {
+    title: "Privacy and Data",
+    optionList: Privacy,
   },
 ];
 
 export default function AccountScreen() {
-  return (
-    <Layout>
-      <ProfileMenuWrapper options={OPTIONS} title={"User Information"} />
-    </Layout>
-  );
+  return <ProfileMenuSet subMenus={menus} />;
 }
 
 const styles = StyleSheet.create({
