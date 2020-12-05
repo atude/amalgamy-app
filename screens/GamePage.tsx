@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Image } from "react-native";
 import { Game } from "../types/index";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "nodereact-native-vector-icons/Ionicons";
 import HollowButton from "../components/HollowButton";
 import { Text, View, ScrollableLayout } from "../components/Themed";
 import { dummyGame } from "./GPDummyData";
@@ -23,7 +23,7 @@ export default function GamePage(props: IGamePageProps) {
 
       <Text>{dummyGame.genres.join(" | ")}</Text>
       <Text>{dummyGame.publisher}</Text>
-      <Ionicons name="md-bookmark" style={styles.topButton} size={32}>
+      <Ionicons name="bookmark" style={styles.topButton} size={32}>
         {" "}
       </Ionicons>
       <Ionicons name="ios-share" style={styles.topButton} size={32}>
