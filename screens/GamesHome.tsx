@@ -5,6 +5,7 @@ import { Text, View } from "../components/Themed";
 import gameIds from "../data/gameIds";
 import { hasKey } from "../utils/index";
 import GameListItem from "../components/games/GameListItem";
+import { ButtonGroup } from "react-native-elements";
 import layout from "../constants/ScreenLayout";
 
 type ExtractedGameData = {
@@ -21,6 +22,7 @@ type GamesHomeState = {
   recommendedGames: Record<string, unknown>[];
   trendingGames: Record<string, unknown>[];
   topSellingGames: Record<string, unknown>[];
+  selectedIndex: number;
 };
 
 export default class GamesHome extends React.Component<
@@ -33,7 +35,12 @@ export default class GamesHome extends React.Component<
       recommendedGames: [],
       trendingGames: [],
       topSellingGames: [],
+      selectedIndex: 1,
     };
+    this.updateIndex = this.updateIndex.bind(this);
+  }
+  updateIndex(selectedIndex: number) {
+    this.setState({ selectedIndex });
   }
   getGameDetails = (appId: number) => {
     return new Promise((resolve, reject) => {
@@ -129,11 +136,21 @@ export default class GamesHome extends React.Component<
     this.getAllGames();
   }
   render() {
+    const buttons = ["Hello", "World", "Buttons"];
+    const { selectedIndex } = this.state;
     return (
-      <ScrollView style={styles.container}>
-        <View lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        {this.recommendedGamesList()}
-      </ScrollView>
+      <View>
+        <ButtonGroup
+          onPress={this.updateIndex}
+          selectedIndex={selectedIndex}
+          buttons={buttons}
+          containerStyle={{ height: 100 }}
+        />
+        <ScrollView style={styles.container}>
+          <View lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+          {this.recommendedGamesList()}
+        </ScrollView>
+      </View>
     );
   }
 }
