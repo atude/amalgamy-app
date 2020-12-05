@@ -11,7 +11,10 @@ import Colors from "../constants/Colors";
 import FiltersIcon from "../components/games/FiltersIcon";
 import FiltersBottomSheet from "../components/games/FiltersBottomSheet";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { AppContext } from "../context/index";
 import { Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 
 type ExtractedGameData = {
   name: string;
@@ -21,7 +24,9 @@ type ExtractedGameData = {
   steam_appid: number;
 };
 
-type GamesHomeProps = Record<string, unknown>;
+type GamesHomeProps = {
+  navigation: any;
+};
 
 type GamesHomeState = {
   allGames: Record<string, unknown>[];
@@ -135,6 +140,7 @@ export default class GamesHome extends React.Component<
     return this.state.topSellingGames.map((game: any, index) => {
       return (
         <GameListItem
+          onPress={() => this.props.navigation.navigate("Profile")}
           key={index}
           gameId={game.id}
           gameName={`${index + 1}. ${game.name}`}
@@ -153,6 +159,7 @@ export default class GamesHome extends React.Component<
       }
       return (
         <GameListItem
+          onPress={() => this.props.navigation.navigate("Profile")}
           key={index}
           gameId={game.steam_appid}
           gameName={game.name}
@@ -172,9 +179,6 @@ export default class GamesHome extends React.Component<
     const id = Object.keys(resultData)[0];
     if (hasKey(resultData, id.toString())) {
       const data = resultData[id.toString()].data;
-      if (typeof data === "undefined") {
-        return { name: "failed" };
-      }
 
       return {
         name: data.name,

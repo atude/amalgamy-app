@@ -10,6 +10,7 @@ type Props = {
   gameName: string;
   gameImage: string;
   genres?: GameGenre[];
+  onPress(): void;
 };
 
 type GameGenre = {
@@ -27,7 +28,7 @@ function processGenres(genres: GameGenre[]): string {
 const GameListItem = (props: Props) => {
   const { gameId, gameName, gameImage, genres } = props;
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.onPress}>
       <View style={styles.container}>
         <Image
           style={styles.gameImage}
