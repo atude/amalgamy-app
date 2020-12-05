@@ -45,6 +45,7 @@ export type Group = {
 };
 
 export type Game = {
+  id: num;
   name: string;
   desc: string;
   icon: string;

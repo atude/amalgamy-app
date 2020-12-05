@@ -20,7 +20,7 @@ const HollowButton: React.FC<IHollowButtonProps> = (
     icon = (
       <Ionicons
         name={props.icon}
-        style={[{ color: Colors[colorScheme].primary }]}
+        style={[{ color: Colors[colorScheme].primary }, styles.icon]}
         size={20}
       />
     );
@@ -40,17 +40,19 @@ const HollowButton: React.FC<IHollowButtonProps> = (
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     borderRadius: 12,
-
+    flexDirection: "row",
     borderWidth: 1,
     paddingVertical: 3,
     paddingHorizontal: 10,
     maxHeight: 30,
+    marginRight: 16,
+    // width: 100,
   },
   text: { fontSize: 14 },
-  icon: {},
+  icon: { marginRight: 4 },
 });
 export default HollowButton;
