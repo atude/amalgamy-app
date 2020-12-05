@@ -11,11 +11,8 @@ import Colors from "../constants/Colors";
 import FiltersIcon from "../components/games/FiltersIcon";
 import FiltersBottomSheet from "../components/games/FiltersBottomSheet";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { AppContext } from "../context/index";
-import { Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
-
+import { OperatingSystem, Genre, Language } from "../types/index";
+import FilterModalHeader from "../components/games/FilterModalHeader";
 type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
@@ -35,6 +32,11 @@ type GamesHomeState = {
   topSellingGames: Record<string, unknown>[];
   selectedIndex: number;
   modalVisible: boolean;
+  platforms: OperatingSystem[];
+  genres: Genre[];
+  languages: Language[];
+  priceMin: 0;
+  priceMax: 1000;
 };
 
 export default class GamesHome extends React.Component<
@@ -50,6 +52,11 @@ export default class GamesHome extends React.Component<
       topSellingGames: [],
       selectedIndex: 1,
       modalVisible: true,
+      platforms: [],
+      genres: ["Casual"],
+      languages: [],
+      priceMin: 0,
+      priceMax: 1000,
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -81,7 +88,7 @@ export default class GamesHome extends React.Component<
             }
           },
           (reason) => {
-            console.log(appId, reason);
+            console.log(reason);
           },
         )
         .catch((err) => {
@@ -101,7 +108,6 @@ export default class GamesHome extends React.Component<
                 topSellingGames: res.data.top_sellers.items,
               },
               () => {
-                console.log(res.data.top_sellers.items);
                 resolve(res.data.top_sellers);
               },
             );
@@ -191,6 +197,23 @@ export default class GamesHome extends React.Component<
     }
     return { name: "failed" };
   };
+  addPlatformFilter(platform: OperatingSystem) {
+    this.setState(
+      ({ platforms }) => ({
+        platforms: [...platforms, platform],
+      }),
+      () => {
+        console.log(`added: ${platform}`);
+      },
+    );
+  }
+  removePlatformFilter(platform: OperatingSystem) {
+    this.setState(({ platforms }) => ({
+      platforms: platforms.filter((plat) => {
+        return plat != platform;
+      }),
+    }));
+  }
   componentDidMount() {
     this.getFeaturedGames();
     this.getAllGames();
@@ -199,26 +222,36 @@ export default class GamesHome extends React.Component<
     const buttons = ["Recommended", "Top Selling", "Featured"];
     const { selectedIndex } = this.state;
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <RBSheet
           ref={(ref) => {
             this.RBSheet = ref;
           }}
           closeOnDragDown={true}
           closeOnPressMask={false}
-          height={300}
+          height={700}
           openDuration={250}
           customStyles={{
             container: {
-              paddingLeft: 20,
-              paddingRight: 20,
+              backgroundColor: Colors.light.primary,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
             },
             draggableIcon: {
-              backgroundColor: "#000",
+              backgroundColor: "#fff",
             },
           }}
         >
-          <FiltersBottomSheet />
+          <FilterModalHeader />
+          <View
+            style={{ backgroundColor: "white", height: layout.window.height }}
+          >
+            <FiltersBottomSheet
+              removePlatform={this.removePlatformFilter.bind(this)}
+              addPlatform={this.addPlatformFilter.bind(this)}
+              genreFilters={this.state.genres}
+            />
+          </View>
         </RBSheet>
         <View style={styles.tabButtonsContainer}>
           <ButtonGroup
@@ -260,14 +293,14 @@ export default class GamesHome extends React.Component<
 
 const styles = StyleSheet.create({
   tabButtonsContainer: {
-    flex: 1,
+    flex: 0,
     flexDirection: "row",
     width: layout.window.width,
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 10,
   },
   container: {
-    marginTop: 30,
+    marginTop: 0,
   },
   title: {
     fontSize: 20,

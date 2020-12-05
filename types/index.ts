@@ -20,7 +20,8 @@ export type Device =
   | "PS4"
   | "PS5"
   | "Xbox One"
-  | "Xbox Series X/S";
+  | "Xbox Series X/S"
+;
 
 export type Genre =
   | "Adventure"
@@ -74,4 +75,22 @@ export type Option = {
 export type SubMenu = {
   title: string;
   optionList: Array<Option>;
+};
+
+export type OperatingSystem = "Windows" | "Mac OS X" | "Linux";
+
+export type Language =
+  | "English"
+  | "Spanish"
+  | "Korean"
+  | "Russian"
+  | "Portuguese"
+  | "Mandarin";
+
+export type FilterOptions = {
+  platforms: OperatingSystem[];
+  genres: Genre[];
+  languages: Language[];
+  priceMin: number;
+  priceMax: number;
 };
