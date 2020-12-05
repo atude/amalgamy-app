@@ -1,6 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+  TransitionSpecs,
+} from "@react-navigation/stack";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -10,6 +14,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesHome from "../screens/GamesHome";
+import AccountScreen from "../screens/profile/AccountScreen";
 import {
   BottomTabParamList,
   HomeParamList,
@@ -128,6 +133,17 @@ function ProfileNavigator() {
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{
+          headerTitle: "Account",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+          ...TransitionPresets.ModalTransition,
         }}
       />
     </ProfileStack.Navigator>

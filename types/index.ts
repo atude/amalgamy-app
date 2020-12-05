@@ -62,3 +62,9 @@ export type Game = {
   accessibilityFeatures: AccessibilityFeature[];
   rating?: number;
 };
+
+export type Option = {
+  optionText: string;
+  icon?: string;
+  pageLink: string;
+};
