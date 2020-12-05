@@ -49,7 +49,7 @@ export type Group = {
 };
 
 export type Game = {
-  id: string;
+  id: number;
   name: string;
   desc: string;
   icon: string;

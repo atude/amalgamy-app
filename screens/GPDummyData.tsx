@@ -1,4 +1,5 @@
 export const dummyGame = {
+  appid: 945360,
   name: "Among Us",
   desc:
     "Prep your spaceship for departure, but beware as one will be an impostor bent on killing everyone!",
