@@ -126,6 +126,7 @@ export default class GamesHome extends React.Component<
     return this.state.featuredGames.map((game: any, index) => {
       return (
         <GameListItem
+          onPress={() => this.props.navigation.navigate("Profile")}
           key={index}
           gameId={game.id}
           gameName={game.name}
