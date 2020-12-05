@@ -1,35 +1,39 @@
 import * as React from "react";
 import { useContext } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput, useColorScheme } from "react-native";
 
-import { Text, View } from "../components/Themed";
+import { Layout, Text, View } from "../components/Themed";
+import Colors from "../constants/Colors";
+import GlobalStyles from "../constants/GlobalStyles";
 import { AppContext } from "../context";
+import { ColorScheme } from "../types";
 
 const SocialScreen = () => {
   const context = useContext(AppContext);
+  const colorScheme = useColorScheme();
+  const styles = createStyles(colorScheme);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Social - {context.check}</Text>
-    </View>
+    <Layout>
+      <View style={styles.searchHeader}>
+        <TextInput style={styles.searchBar} inlineImageLeft="search_icon" />
+      </View>
+    </Layout>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
+const createStyles = (colorScheme: ColorScheme) =>
+  StyleSheet.create({
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    searchHeader: {},
+    searchBar: {
+      backgroundColor: Colors[colorScheme].lightgrey3,
+      borderRadius: 20,
+      padding: 12,
+    },
+  });
 
 export default SocialScreen;

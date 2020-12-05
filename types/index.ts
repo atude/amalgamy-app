@@ -1,3 +1,5 @@
+export type ColorScheme = "light" | "dark";
+
 export type User = {
   email: string;
   firstName?: string;
@@ -23,6 +25,8 @@ export type Device =
 export type Genre =
   | "Adventure"
   | "RPG"
+  | "Action"
+  | "Casual"
   | "example 1"
   | "example 2"
   | "example 3"

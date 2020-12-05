@@ -10,14 +10,13 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesHome from "../screens/GamesHome";
-import TabTwoScreen from "../screens/SocialScreen";
 import {
   BottomTabParamList,
   HomeParamList,
   ProfileParamList,
   GamesHomeParamList,
   SocialParamList,
-} from "../types";
+} from "../types/navigation";
 import SocialScreen from "../screens/SocialScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -157,7 +156,6 @@ function GamesNavigator() {
 const styles = StyleSheet.create({
   headerText: {
     ...GlobalStyles.styles.textHeader,
-    fontFamily: "sans-serif",
     fontWeight: "700",
     paddingLeft: 4,
   },
