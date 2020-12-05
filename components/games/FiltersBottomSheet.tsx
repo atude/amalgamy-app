@@ -1,40 +1,30 @@
-import { Feather } from "@expo/vector-icons";
 import * as React from "react";
-import {
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  View,
-  Text,
-} from "react-native";
-import Colors from "../../constants/Colors";
-
+import { View, Button, StyleSheet, Text } from "react-native";
 type Props = {
   visible: boolean;
-  handleDismiss(): void;
 };
 
-export default function FiltersIcon(props: Props) {
+const FiltersBottomSheet = () => {
   return (
-    <Modal
-      animated
-      animationType="fade"
-      visible={props.visible}
-      transparent
-      onRequestClose={() => props.handleDismiss()}
-    >
-      <View style={styles.overlay}>
-        <Text>Hi</Text>
-      </View>
-    </Modal>
-  );
-}
+    <View>
+      <Text>Hi</Text>
+    </View>
+  ); 
+};
+
+export default FiltersBottomSheet;
 
 const styles = StyleSheet.create({
   overlay: {
     backgroundColor: "rgba(0,0,0,0.2)",
     flex: 1,
     justifyContent: "flex-end",
+  },
+  container: {
+    backgroundColor: "white",
+    paddingTop: 12,
+    height: 300,
+    borderTopRightRadius: 12,
+    borderTopLeftRadius: 12,
   },
 });

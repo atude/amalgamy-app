@@ -10,6 +10,8 @@ import layout from "../constants/ScreenLayout";
 import Colors from "../constants/Colors";
 import FiltersIcon from "../components/games/FiltersIcon";
 import FiltersBottomSheet from "../components/games/FiltersBottomSheet";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { Button } from "react-native";
 
 type ExtractedGameData = {
   name: string;
@@ -27,6 +29,7 @@ type GamesHomeState = {
   featuredGames: Record<string, unknown>[];
   topSellingGames: Record<string, unknown>[];
   selectedIndex: number;
+  modalVisible: boolean;
 };
 
 export default class GamesHome extends React.Component<
@@ -41,6 +44,7 @@ export default class GamesHome extends React.Component<
       featuredGames: [],
       topSellingGames: [],
       selectedIndex: 1,
+      modalVisible: true,
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -183,14 +187,34 @@ export default class GamesHome extends React.Component<
     return { name: "failed" };
   };
   componentDidMount() {
-    this.getAllGames();
     this.getFeaturedGames();
+    this.getAllGames();
   }
   render() {
     const buttons = ["Recommended", "Top Selling", "Featured"];
     const { selectedIndex } = this.state;
     return (
       <View>
+        <RBSheet
+          ref={(ref) => {
+            this.RBSheet = ref;
+          }}
+          closeOnDragDown={true}
+          closeOnPressMask={false}
+          height={300}
+          openDuration={250}
+          customStyles={{
+            container: {
+              paddingLeft: 20,
+              paddingRight: 20,
+            },
+            draggableIcon: {
+              backgroundColor: "#000",
+            },
+          }}
+        >
+          <FiltersBottomSheet />
+        </RBSheet>
         <View style={styles.tabButtonsContainer}>
           <ButtonGroup
             onPress={this.updateIndex}
@@ -215,7 +239,7 @@ export default class GamesHome extends React.Component<
               borderRadius: 100,
             }}
           />
-          <FiltersIcon></FiltersIcon>
+          <FiltersIcon onPress={() => this.RBSheet.open()}></FiltersIcon>
         </View>
         <ScrollView style={styles.container}>
           {this.state.selectedIndex === 0
