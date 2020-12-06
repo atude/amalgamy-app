@@ -38,3 +38,36 @@ export const languageList = [
   "Ukrainian",
   "Vietnamese",
 ];
+
+export type priceItem = {
+  title: string;
+  min: number;
+  max: number;
+};
+export const commonPriceList = [
+  {
+    title: "Under $5",
+    min: 0,
+    max: 500,
+  },
+  {
+    title: "Under $10",
+    min: 0,
+    max: 1000,
+  },
+  {
+    title: "Under $15",
+    min: 0,
+    max: 1500,
+  },
+  {
+    title: "Under $20",
+    min: 0,
+    max: 2000,
+  },
+  {
+    title: "Under $30",
+    min: 0,
+    max: 3000,
+  },
+];

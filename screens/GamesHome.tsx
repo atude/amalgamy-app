@@ -15,6 +15,7 @@ import { OperatingSystem, Genre, Language } from "../types/index";
 import FilterModalHeader from "../components/games/FilterModalHeader";
 import GenreMenu from "../components/games/FilterMenus/GenreMenu";
 import LanguageMenu from "../components/games/FilterMenus/LanguageMenu";
+import PriceMenu from "../components/games/FilterMenus/PriceMenu";
 type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
@@ -37,8 +38,8 @@ type GamesHomeState = {
   platforms: OperatingSystem[];
   genres: string[];
   languages: Language[];
-  priceMin: 0;
-  priceMax: 1000;
+  priceMin: number;
+  priceMax: number;
   menuItem: string;
 };
 
@@ -58,8 +59,8 @@ export default class GamesHome extends React.Component<
       platforms: [],
       genres: [],
       languages: ["English"],
-      priceMin: 0,
-      priceMax: 1000,
+      priceMin: -1,
+      priceMax: -1,
       menuItem: "filters",
     };
     this.updateIndex = this.updateIndex.bind(this);
@@ -252,6 +253,7 @@ export default class GamesHome extends React.Component<
       }),
     }));
   }
+
   componentDidMount() {
     this.getFeaturedGames();
     this.getAllGames();
@@ -260,6 +262,29 @@ export default class GamesHome extends React.Component<
     this.setState({
       menuItem: menu,
     });
+  }
+  setPriceMin(price: number) {
+    this.setState(
+      {
+        priceMin: price,
+      },
+      () => {
+        console.log(`setmin: ${price}`);
+      },
+    );
+  }
+  setPriceMax(price: number) {
+    this.setState(
+      {
+        priceMax: price,
+      },
+      () => {
+        console.log(`setmax: ${price}`);
+      },
+    );
+  }
+  applyFilters() {
+    this.RBSheet.close()
   }
   render() {
     const buttons = ["Recommended", "Top Selling", "Featured"];
@@ -304,6 +329,13 @@ export default class GamesHome extends React.Component<
                 removeLanguage={this.removeLanguageFilter.bind(this)}
                 addLanguage={this.addLanguageFilter.bind(this)}
               />
+            ) : this.state.menuItem === "Price" ? (
+              <PriceMenu
+                setPriceMin={this.setPriceMin.bind(this)}
+                setPriceMax={this.setPriceMax.bind(this)}
+                priceMin={this.state.priceMin}
+                priceMax={this.state.priceMax}
+              />
             ) : (
               <FiltersBottomSheet
                 removePlatform={this.removePlatformFilter.bind(this)}
@@ -316,6 +348,9 @@ export default class GamesHome extends React.Component<
                 languageFilters={this.state.languages}
                 removeLanguage={this.removeLanguageFilter.bind(this)}
                 addLanguage={this.addLanguageFilter.bind(this)}
+                priceMin={this.state.priceMin}
+                priceMax={this.state.priceMax}
+                applyFilters={this.applyFilters.bind(this)}
               />
             )}
           </View>
