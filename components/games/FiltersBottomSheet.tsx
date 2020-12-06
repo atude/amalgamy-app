@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
   overlay: {
     backgroundColor: "rgba(0,0,0,0.2)",
     flex: 1,
-    justifyContent: "flex-end",
   },
   categoryValuesContainer: {
     padding: 14,
