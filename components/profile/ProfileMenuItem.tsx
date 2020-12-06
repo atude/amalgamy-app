@@ -13,31 +13,35 @@ type Props = {
 };
 
 const ProfileMenuItem = (props: Props) => {
-  const {
-    optionText,
-    pageLink,
-    icon,
-    valueText,
-    checkbox,
-    checkboxValue,
-  } = props.option;
+  const { optionText, pageLink, icon, valueText, checkbox } = props.option;
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={() => navigation.navigate(pageLink)}>
-      <View style={styles.container}>
+      <View
+        style={
+          checkbox === false || checkbox === true
+            ? styles.checkContainer
+            : styles.container
+        }
+      >
         <Text style={[styles.optionText, GlobalStyles.styles.paragraphText]}>
           {optionText}
         </Text>
-        <View style={styles.iconContainer}>
-          {icon && <Ionicons name={icon} size={20} color="black" />}
-        </View>
+
+        {icon && (
+          <View style={styles.iconContainer}>
+            <Ionicons name={icon} size={20} color="black" />
+          </View>
+        )}
+
         {valueText && (
           <Text style={[styles.valueText, GlobalStyles.styles.paragraphText]}>
             {valueText}
           </Text>
         )}
+
         {(checkbox === false || checkbox === true) && (
-          <CheckBox checked={checkbox} />
+          <CheckBox checked={checkbox} /> // TODO: onPress!!!
         )}
       </View>
     </TouchableOpacity>
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   optionText: {
-    alignSelf: "flex-start",
+    alignSelf: "center",
   },
   valueText: {
     alignSelf: "flex-start",
@@ -64,5 +68,12 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignSelf: "center",
     alignItems: "flex-end",
+  },
+  checkContainer: {
+    borderBottomWidth: 1,
+    borderColor: Colors.light.lightgrey3,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 12,
   },
 });

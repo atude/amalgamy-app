@@ -27,10 +27,6 @@ const UserInfo = [
     optionText: "Change Password",
     pageLink: "ChangePasswordScreen",
   },
-  {
-    optionText: "Two-Factor Authentication",
-    pageLink: "TwoFactorAuthScreen",
-  },
 ];
 
 const RecPrefs: Array<Option> = [
