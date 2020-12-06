@@ -1,9 +1,10 @@
 import * as React from "react";
 import { ProfileAvatar } from "../components/profile/ProfileAvatar";
-import { Layout, Text, View } from "../components/Themed";
+import { BigButton, Layout, Text, View } from "../components/Themed";
 import { StyleSheet } from "react-native";
 import { ProfileMenuWrapper } from "../components/profile/ProfileMenuWrapper";
 import { Option } from "../types/index";
+import { signOut } from "../functions/auth";
 
 const DUMMY_PROFILE = {
   firstName: "Mozamel",
@@ -43,6 +44,7 @@ export default function ProfileHome() {
         avatar={DUMMY_PROFILE.avatar}
       />
       <ProfileMenuWrapper options={OPTIONS} />
+      <BigButton text="Logout" onPress={signOut} />
     </Layout>
   );
 }

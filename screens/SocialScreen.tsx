@@ -1,30 +1,72 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
   useColorScheme,
 } from "react-native";
+import Loading from "../components/shared/Loading";
 import FriendListItem from "../components/social/FriendListItem";
+import UserListItem from "../components/social/UserListItem";
 
-import { Layout, ScrollableLayout, Text, View } from "../components/Themed";
+import { ScrollableLayout, Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
-import GlobalStyles from "../constants/GlobalStyles";
-import { DUMMY_FRIENDS } from "../data/_dummyData";
-import { ColorScheme } from "../types";
+import { AppContext } from "../context";
+import { getUsers } from "../functions/users";
+import { ColorScheme, User } from "../types";
 
 const SocialScreen = () => {
   const colorScheme = useColorScheme() ?? "light";
   const styles = createStyles(colorScheme);
-  const friends = DUMMY_FRIENDS;
+  const { user } = useContext(AppContext);
+  const [friends, setFriends] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [searchUsers, setSearchUsers] = useState<User[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchUsers = async () => {
+    const users = await getUsers();
+    setUsers(users);
+  };
+
+  const fetchFriends = async () => {
+    const friendEmails = user?.friendEmails;
+    const filteredFriends = users.filter((user) =>
+      friendEmails?.includes(user.email),
+    );
+    setFriends(filteredFriends);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetchUsers();
+    fetchFriends();
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchFriends();
+    setSearchUsers(
+      users.filter(
+        (thisUser) =>
+          !user?.friendEmails?.includes(user.email) &&
+          (thisUser.firstName.toLowerCase().includes(search.toLowerCase()) ||
+            thisUser.lastName.toLowerCase().includes(search.toLowerCase())),
+      ),
+    );
+    setLoading(false);
+  }, [search, user]);
 
   return (
     <ScrollableLayout>
       <View style={styles.header}>
         <View style={styles.searchBar}>
           <TextInput
-            placeholder="Search for friends, groups..."
+            placeholder="Search for friends or any user..."
+            onChangeText={(e) => setSearch(e)}
             style={styles.searchInput}
           />
           <Ionicons
@@ -41,13 +83,29 @@ const SocialScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      {friends.map((friend, i) => (
-        <FriendListItem
-          key={friend.email}
-          friend={friend}
-          lastItem={i === friends.length - 1}
-        />
-      ))}
+      <Loading loading={loading} />
+      {!!search.trim().length ? (
+        <View>
+          <Text style={styles.searchLength}>
+            {searchUsers.length} users found
+          </Text>
+          {searchUsers.map((user, i) => (
+            <UserListItem
+              key={user.email}
+              foundUser={user}
+              lastItem={i === users.length - 1}
+            />
+          ))}
+        </View>
+      ) : (
+        friends.map((friend, i) => (
+          <FriendListItem
+            key={friend.email}
+            friend={friend}
+            lastItem={i === friends.length - 1}
+          />
+        ))
+      )}
     </ScrollableLayout>
   );
 };
@@ -82,6 +140,10 @@ const createStyles = (colorScheme: ColorScheme) =>
     },
     searchInput: {
       width: "80%",
+    },
+    searchLength: {
+      alignSelf: "center",
+      color: Colors[colorScheme].darkgrey,
     },
   });
 

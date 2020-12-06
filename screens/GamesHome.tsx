@@ -10,7 +10,12 @@ import layout from "../constants/ScreenLayout";
 import Colors from "../constants/Colors";
 import FiltersIcon from "../components/games/FiltersIcon";
 import FiltersBottomSheet from "../components/games/FiltersBottomSheet";
-
+import RBSheet from "react-native-raw-bottom-sheet";
+import { OperatingSystem, Genre, Language } from "../types/index";
+import FilterModalHeader from "../components/games/FilterModalHeader";
+import GenreMenu from "../components/games/FilterMenus/GenreMenu";
+import LanguageMenu from "../components/games/FilterMenus/LanguageMenu";
+import PriceMenu from "../components/games/FilterMenus/PriceMenu";
 type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
@@ -24,11 +29,20 @@ type ExtractedGameData = {
   metacritic: Array<string>;
 };
 
-type GamesHomeProps = Record<string, unknown>;
+type GamesHomeProps = {
+  navigation: any;
+};
 
 type GamesHomeState = {
   allGames: Record<string, unknown>[];
   selectedIndex: number;
+  modalVisible: boolean;
+  platforms: OperatingSystem[];
+  genres: string[];
+  languages: Language[];
+  priceMin: number;
+  priceMax: number;
+  menuItem: string;
 };
 
 export default class GamesHome extends React.Component<
@@ -40,6 +54,13 @@ export default class GamesHome extends React.Component<
     this.state = {
       allGames: [],
       selectedIndex: 1,
+      modalVisible: true,
+      platforms: [],
+      genres: [],
+      languages: ["English"],
+      priceMin: -1,
+      priceMax: -1,
+      menuItem: "filters",
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -71,7 +92,7 @@ export default class GamesHome extends React.Component<
             }
           },
           (reason) => {
-            console.log(appId, reason);
+            console.log(reason);
           },
         )
         .catch((err) => {
@@ -79,7 +100,31 @@ export default class GamesHome extends React.Component<
         });
     });
   };
-
+  getFeaturedGames = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`http://store.steampowered.com/api/featuredcategories/`)
+        .then(
+          (res) => {
+            this.setState(
+              {
+                featuredGames: res.data.specials.items,
+                topSellingGames: res.data.top_sellers.items,
+              },
+              () => {
+                resolve(res.data.top_sellers);
+              },
+            );
+          },
+          (reason) => {
+            console.log(reason);
+          },
+        )
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
   getAllGames = () => {
     const allGamePromises = gameIds.all.map((game) => {
       return this.getGameDetails(game.appid);
@@ -161,14 +206,158 @@ export default class GamesHome extends React.Component<
     }
     return { name: "failed" };
   };
+  addPlatformFilter(platform: OperatingSystem) {
+    this.setState(
+      ({ platforms }) => ({
+        platforms: [...platforms, platform],
+      }),
+      () => {
+        console.log(`added: ${platform}`);
+      },
+    );
+  }
+  removePlatformFilter(platform: OperatingSystem) {
+    this.setState(({ platforms }) => ({
+      platforms: platforms.filter((plat) => {
+        return plat != platform;
+      }),
+    }));
+  }
+  addGenreFilter(genre: Genre) {
+    this.setState(
+      ({ genres }) => ({
+        genres: [...genres, genre],
+      }),
+      () => {
+        console.log(`added genre: ${genre}`);
+      },
+    );
+  }
+  removeGenreFilter(genre: string) {
+    this.setState(({ genres }) => ({
+      genres: genres.filter((val) => {
+        return val != genre;
+      }),
+    }));
+  }
+  addLanguageFilter(language: Language) {
+    this.setState(
+      ({ languages }) => ({
+        languages: [...languages, language],
+      }),
+      () => {
+        console.log(`added lang: ${language}`);
+      },
+    );
+  }
+  removeLanguageFilter(language: string) {
+    this.setState(({ languages }) => ({
+      languages: languages.filter((val) => {
+        return val != language;
+      }),
+    }));
+  }
+
   componentDidMount() {
     this.getAllGames();
+  }
+  setMenu(menu: string) {
+    this.setState({
+      menuItem: menu,
+    });
+  }
+  setPriceMin(price: number) {
+    this.setState(
+      {
+        priceMin: price,
+      },
+      () => {
+        console.log(`setmin: ${price}`);
+      },
+    );
+  }
+  setPriceMax(price: number) {
+    this.setState(
+      {
+        priceMax: price,
+      },
+      () => {
+        console.log(`setmax: ${price}`);
+      },
+    );
+  }
+  applyFilters() {
+    this.RBSheet.close();
   }
   render() {
     const buttons = ["Recommended", "Top Selling", "Featured"];
     const { selectedIndex } = this.state;
     return (
-      <View>
+      <View style={{ flex: 1 }}>
+        <RBSheet
+          ref={(ref) => {
+            this.RBSheet = ref;
+          }}
+          closeOnDragDown={true}
+          closeOnPressMask={false}
+          height={700}
+          openDuration={250}
+          customStyles={{
+            container: {
+              backgroundColor: Colors.light.primary,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+            },
+            draggableIcon: {
+              backgroundColor: "#fff",
+            },
+          }}
+        >
+          <FilterModalHeader
+            setMenu={this.setMenu.bind(this)}
+            menu={this.state.menuItem}
+          />
+          <View
+            style={{ backgroundColor: "white", height: layout.window.height }}
+          >
+            {this.state.menuItem === "genres" ? (
+              <GenreMenu
+                genreFilters={this.state.genres}
+                removeGenre={this.removeGenreFilter.bind(this)}
+                addGenre={this.addGenreFilter.bind(this)}
+              />
+            ) : this.state.menuItem === "languages" ? (
+              <LanguageMenu
+                languageFilters={this.state.languages}
+                removeLanguage={this.removeLanguageFilter.bind(this)}
+                addLanguage={this.addLanguageFilter.bind(this)}
+              />
+            ) : this.state.menuItem === "Price" ? (
+              <PriceMenu
+                setPriceMin={this.setPriceMin.bind(this)}
+                setPriceMax={this.setPriceMax.bind(this)}
+                priceMin={this.state.priceMin}
+                priceMax={this.state.priceMax}
+              />
+            ) : (
+              <FiltersBottomSheet
+                removePlatform={this.removePlatformFilter.bind(this)}
+                addPlatform={this.addPlatformFilter.bind(this)}
+                genreFilters={this.state.genres}
+                removeGenre={this.removeGenreFilter.bind(this)}
+                addGenre={this.addGenreFilter.bind(this)}
+                platformFilters={this.state.platforms}
+                openMenu={this.setMenu.bind(this)}
+                languageFilters={this.state.languages}
+                removeLanguage={this.removeLanguageFilter.bind(this)}
+                addLanguage={this.addLanguageFilter.bind(this)}
+                priceMin={this.state.priceMin}
+                priceMax={this.state.priceMax}
+                applyFilters={this.applyFilters.bind(this)}
+              />
+            )}
+          </View>
+        </RBSheet>
         <View style={styles.tabButtonsContainer}>
           <ButtonGroup
             onPress={this.updateIndex}
@@ -193,7 +382,7 @@ export default class GamesHome extends React.Component<
               borderRadius: 100,
             }}
           />
-          <FiltersIcon></FiltersIcon>
+          <FiltersIcon onPress={() => this.RBSheet.open()}></FiltersIcon>
         </View>
         <ScrollView style={styles.container}>
           {this.state.selectedIndex === 0
@@ -209,14 +398,14 @@ export default class GamesHome extends React.Component<
 
 const styles = StyleSheet.create({
   tabButtonsContainer: {
-    flex: 1,
+    flex: 0,
     flexDirection: "row",
     width: layout.window.width,
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 10,
   },
   container: {
-    marginTop: 30,
+    marginTop: 0,
   },
   title: {
     fontSize: 20,

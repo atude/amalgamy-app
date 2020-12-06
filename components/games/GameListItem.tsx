@@ -13,6 +13,7 @@ type Props = {
   gameName: string;
   gameImage: string;
   genres?: GameGenre[];
+  onPress(): void;
 };
 
 type GameGenre = {

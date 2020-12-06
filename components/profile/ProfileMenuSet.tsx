@@ -9,6 +9,7 @@ import { ProfileMenuWrapper } from "../../components/profile/ProfileMenuWrapper"
 
 type Prop = {
   subMenus: Array<SubMenu>;
+  checked?: boolean;
 };
 
 export default function ProfileMenuSet(prop: Prop) {

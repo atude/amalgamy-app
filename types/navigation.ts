@@ -27,4 +27,5 @@ export type SocialParamList = {
 export type ProfileParamList = {
   ProfileScreen: undefined;
   AccountScreen: undefined;
+  ChangeEmailScreen: undefined;
 };
