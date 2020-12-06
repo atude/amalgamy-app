@@ -27,7 +27,7 @@ export function hasKey<O>(obj: O, key: keyof any): key is keyof O {
 
 export const firebaseUserToUser = (firebaseUser: firebase.User): User => {
   return {
-    ...firebaseUser,
+    // ...firebaseUser,
     email: firebaseUser.email ?? "",
     firstName: "x",
     lastName: "x",
