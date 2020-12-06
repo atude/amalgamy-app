@@ -7,6 +7,7 @@ import { Option } from "../../types/index";
 import { Ionicons } from "@expo/vector-icons";
 import GlobalStyles from "../../constants/GlobalStyles";
 import { CheckBox } from "react-native-elements";
+import { useState } from "react";
 
 type Props = {
   option: Option;
@@ -15,15 +16,11 @@ type Props = {
 const ProfileMenuItem = (props: Props) => {
   const { optionText, pageLink, icon, valueText, checkbox } = props.option;
   const navigation = useNavigation();
+  const [checked, setChecked] = useState(false);
+
   return (
     <TouchableOpacity onPress={() => navigation.navigate(pageLink)}>
-      <View
-        style={
-          checkbox === false || checkbox === true
-            ? styles.checkContainer
-            : styles.container
-        }
-      >
+      <View style={checkbox ? styles.checkContainer : styles.container}>
         <Text style={[styles.optionText, GlobalStyles.styles.paragraphText]}>
           {optionText}
         </Text>
@@ -40,8 +37,8 @@ const ProfileMenuItem = (props: Props) => {
           </Text>
         )}
 
-        {(checkbox === false || checkbox === true) && (
-          <CheckBox checked={checkbox} /> // TODO: onPress!!!
+        {checkbox && (
+          <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
         )}
       </View>
     </TouchableOpacity>
