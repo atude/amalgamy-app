@@ -5,6 +5,7 @@ import {
   Share,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Text, View, ScrollableLayout } from "../../components/Themed";
@@ -15,6 +16,7 @@ import GameSuggestionContainer from "../../components/home/GameSugestionContaine
 import pickAccFeatures from "./AccessibilityFeatures";
 import { AppContext } from "../../context";
 import { addBookmark, getUser } from "../../functions/users";
+import SnackBar from "react-native-snackbar-component";
 let gameName: string;
 
 export default function GamePage({ route, navigation }) {
@@ -22,8 +24,9 @@ export default function GamePage({ route, navigation }) {
   const { user, setUser } = React.useContext(AppContext);
   const gameInfo = route.params;
   gameName = gameInfo.name;
-
+  const [snack, setSnack] = React.useState(false);
   async function bookmarkGame() {
+    setSnack(() => true);
     if (user) {
       await addBookmark(user?.email, gameInfo.gameId);
       const res = await getUser(user?.email);
@@ -33,6 +36,15 @@ export default function GamePage({ route, navigation }) {
 
   return (
     <ScrollableLayout style={styles.scrollContainer}>
+      <SnackBar
+        visible={snack}
+        textMessage="Game Bookmarked!"
+        position="top"
+        autoHidingTime={5000}
+        actionHandler={() => {
+          console.log("snackbar button clicked!");
+        }}
+      />
       <View
         style={[
           styles.rowContainer,
