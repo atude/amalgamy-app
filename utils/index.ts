@@ -1,5 +1,7 @@
+import { User } from "../types";
+
 // TODO: get proper friend type
-export const formatFriendsActivity = (friends: any) => {
+export const formatFriendsActivity = (friends: User[]) => {
   if (friends && friends.length) {
     switch (friends.length) {
       case 0:
@@ -22,3 +24,12 @@ export const formatFriendsActivity = (friends: any) => {
 export function hasKey<O>(obj: O, key: keyof any): key is keyof O {
   return key in obj;
 }
+
+export const firebaseUserToUser = (firebaseUser: firebase.User): User => {
+  return {
+    ...firebaseUser,
+    email: firebaseUser.email ?? "",
+    firstName: "x",
+    lastName: "x",
+  };
+};

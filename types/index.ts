@@ -49,7 +49,7 @@ export type Group = {
 };
 
 export type Game = {
-  id: string;
+  id: number;
   name: string;
   desc: string;
   icon: string;
@@ -80,4 +80,12 @@ export type Option = {
 export type SubMenu = {
   title: string;
   optionList: Array<Option>;
+};
+
+export type Message = {
+  id: string;
+  timestamp: number;
+  senderEmail: string;
+  receiverEmail: string;
+  message: string;
 };

@@ -19,7 +19,7 @@ type ColorScheme = {
   darkgrey: string;
 };
 
-const Colors: Record<string, ColorScheme> = {
+const Colors: Record<"light" | "dark", ColorScheme> = {
   light: {
     text: "#000",
     background: "#fff",
@@ -49,10 +49,12 @@ const Colors: Record<string, ColorScheme> = {
     subheader: "#878E95",
     header: "#4A5056",
     grey2: "#AEB5BC",
+    lightgrey2: "#E9ECEF",
     lightgrey3: "#F1F3F5",
     yellow: "#EECA74",
     red: "#CC4039",
     purpleText: "#7442C8",
+    darkgrey: "#333333",
   },
 };
 

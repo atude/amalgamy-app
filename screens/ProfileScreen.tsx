@@ -15,22 +15,22 @@ const OPTIONS: Option[] = [
   {
     optionText: "Account",
     pageLink: "AccountScreen",
-    icon: "md-settings"
+    icon: "md-settings",
   },
   {
     optionText: "Connected Services",
     pageLink: "Services",
-    icon: "md-git-branch"
+    icon: "md-git-branch",
   },
   {
     optionText: "Saved Games",
     pageLink: "SavedGames",
-    icon: "md-bookmarks"
+    icon: "md-bookmarks",
   },
   {
     optionText: "Reviews",
     pageLink: "Reviews",
-    icon: "md-star"
+    icon: "md-star",
   },
 ];
 

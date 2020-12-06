@@ -5,7 +5,7 @@ import {
   TransitionPresets,
   TransitionSpecs,
 } from "@react-navigation/stack";
-import * as React from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
@@ -24,6 +24,7 @@ import {
 import SocialScreen from "../screens/SocialScreen";
 import ChatScreen from "../screens/social/ChatScreen";
 import GamePage from "../screens/game-page/GamePage";
+import { AppContext } from "../context";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -106,13 +107,15 @@ function HomeNavigator() {
 const SocialStack = createStackNavigator<SocialParamList>();
 
 function SocialNavigator() {
+  const { currChatReceiver } = useContext(AppContext);
+
   return (
     <SocialStack.Navigator>
       <SocialStack.Screen
         name="SocialScreen"
         component={SocialScreen}
         options={{
-          headerTitle: "Friends & Groups",
+          headerTitle: "Social",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
@@ -122,7 +125,9 @@ function SocialNavigator() {
         name="ChatScreen"
         component={ChatScreen}
         options={{
-          headerTitle: "Friends & Groups",
+          headerTitle: currChatReceiver
+            ? `${currChatReceiver?.firstName} ${currChatReceiver?.lastName}`
+            : "Social",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
