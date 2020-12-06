@@ -31,6 +31,8 @@ import DevicesScreen from "../screens/profile/AccountScreens/DevicesScreen";
 import AccessibilityScreen from "../screens/profile/AccountScreens/AccessibilityScreen";
 import GenreScreen from "../screens/profile/AccountScreens/GenreScreen";
 import LanguagesScreen from "../screens/profile/AccountScreens/LanguagesScreen";
+import ChangePasswordScreen from "../screens/profile/AccountScreens/ChangePasswordScreen";
+import savedGamesScreen from "../screens/profile/savedGames/savedGamesScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -179,6 +181,16 @@ function ProfileNavigator() {
         }}
       />
       <ProfileStack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+        options={{
+          headerTitle: "Change Password",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
         name="DevicesScreen"
         component={DevicesScreen}
         options={{
@@ -213,6 +225,16 @@ function ProfileNavigator() {
         component={LanguagesScreen}
         options={{
           headerTitle: "Language Support Preferences",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="SavedGames"
+        component={savedGamesScreen}
+        options={{
+          headerTitle: "Saved Games",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
