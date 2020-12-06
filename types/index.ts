@@ -8,7 +8,7 @@ export type User = {
   devices?: Device[];
   genres?: Genre[];
   accessibilityFeatures?: AccessibilityFeature[];
-  friends?: User[];
+  friendEmails?: string[];
   groups?: Group[];
   // bookmarkedGames: Game[];
 };
