@@ -13,13 +13,27 @@ type Props = {
   option: Option;
 };
 
+function onPressAction(checked: boolean) {
+  if (checked) {
+    setChecked(!checked);
+  }
+}
+
 const ProfileMenuItem = (props: Props) => {
   const { optionText, pageLink, icon, valueText, checkbox } = props.option;
   const navigation = useNavigation();
   const [checked, setChecked] = useState(false);
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(pageLink)}>
+    <TouchableOpacity
+      onPress={() => {
+        if (!checkbox) {
+          navigation.navigate(pageLink);
+        } else {
+          setChecked(!checked);
+        }
+      }}
+    >
       <View style={checkbox ? styles.checkContainer : styles.container}>
         <Text style={[styles.optionText, GlobalStyles.styles.paragraphText]}>
           {optionText}
@@ -37,9 +51,7 @@ const ProfileMenuItem = (props: Props) => {
           </Text>
         )}
 
-        {checkbox && (
-          <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
-        )}
+        {checkbox && <CheckBox checked={checked} />}
       </View>
     </TouchableOpacity>
   );

@@ -7,12 +7,13 @@ import Navigation from "../navigation";
 import { AppContext } from "../context";
 import { firebaseUserToUser } from "../utils";
 import { Button, Text, View } from "../components/Themed";
-import { ColorScheme } from "../types";
+import { ColorScheme, ErrorMessage, User } from "../types";
 import { Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { createAccount, signInEmail } from "../functions/auth";
 import Colors from "../constants/Colors";
 import Loading from "../components/shared/Loading";
 import GlobalStyles from "../constants/GlobalStyles";
+import { getUser } from "../functions/users";
 
 const LoginScreen = () => {
   const { user, setUser } = useContext(AppContext);
@@ -50,18 +51,29 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     setIsLoading(true);
     setError("");
-    const errMsg = await signInEmail(credentials.email, credentials.password);
-    if (!!errMsg) {
-      setError(errMsg);
+    const userOrErr: User | ErrorMessage = await signInEmail(
+      credentials.email,
+      credentials.password,
+    );
+    if (!(userOrErr as User).email) {
+      setError(userOrErr as ErrorMessage);
+    } else {
+      setUser(userOrErr as User);
     }
     setIsLoading(false);
   };
 
   useEffect(() => {
-    Firebase.auth().onAuthStateChanged((firebaseUser) => {
+    Firebase.auth().onAuthStateChanged(async (firebaseUser) => {
       if (firebaseUser && firebaseUser.email) {
         setUser(firebaseUserToUser(firebaseUser));
-        console.log("Auth state changed => " + firebaseUser.email);
+        const userDoc = await getUser(firebaseUser.email);
+        if (userDoc) {
+          setUser(userDoc);
+          console.log("Auth state changed => " + firebaseUser.email);
+        } else {
+          console.log("User document could not be found");
+        }
       } else {
         setUser(undefined);
       }
@@ -83,7 +95,7 @@ const LoginScreen = () => {
   }, [currScreen, credentials]);
 
   if (isLoadingUser) {
-    return <Text>loading</Text>;
+    return <Loading loading={isLoadingUser} />;
   } else if (!user) {
     return (
       <View style={styles.container}>
@@ -156,6 +168,7 @@ const LoginScreen = () => {
             </>
           )}
           <Text style={styles.errorText}>{err}</Text>
+          <Loading loading={isLoading} />
           <View style={styles.buttonsContainer}>
             {currScreen === undefined && (
               <>

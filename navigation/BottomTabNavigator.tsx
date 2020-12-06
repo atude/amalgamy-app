@@ -30,6 +30,10 @@ import { AppContext } from "../context";
 import ChangeEmailScreen from "../screens/profile/AccountScreens/ChangeEmailScreen";
 import DevicesScreen from "../screens/profile/AccountScreens/DevicesScreen";
 import AccessibilityScreen from "../screens/profile/AccountScreens/AccessibilityScreen";
+import GenreScreen from "../screens/profile/AccountScreens/GenreScreen";
+import LanguagesScreen from "../screens/profile/AccountScreens/LanguagesScreen";
+import ChangePasswordScreen from "../screens/profile/AccountScreens/ChangePasswordScreen";
+import savedGamesScreen from "../screens/profile/savedGames/savedGamesScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -102,6 +106,14 @@ function HomeNavigator() {
           headerTitle: "For You",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <HomeStack.Screen
+        name="GamePageHome"
+        component={GamePage}
+        options={{
+          headerTitle: "",
           headerStyle: styles.headerContainer,
         }}
       />
@@ -178,6 +190,16 @@ function ProfileNavigator() {
         }}
       />
       <ProfileStack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+        options={{
+          headerTitle: "Change Password",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
         name="DevicesScreen"
         component={DevicesScreen}
         options={{
@@ -191,7 +213,37 @@ function ProfileNavigator() {
         name="AccessibilityScreen"
         component={AccessibilityScreen}
         options={{
-          headerTitle: "Accessibility Options",
+          headerTitle: "Accessibility Preferences",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="GenreScreen"
+        component={GenreScreen}
+        options={{
+          headerTitle: "Genre Preferences",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="LanguagesScreen"
+        component={LanguagesScreen}
+        options={{
+          headerTitle: "Language Support Preferences",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="SavedGames"
+        component={savedGamesScreen}
+        options={{
+          headerTitle: "Saved Games",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
@@ -220,7 +272,16 @@ function GamesNavigator() {
         name="GamePage"
         component={GamePage}
         options={{
-          headerShown: false,
+          headerTitle: "",
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <GamesStack.Screen
+        name="GamePageHome"
+        component={GamePage}
+        options={{
+          headerTitle: "",
+          headerStyle: styles.headerContainer,
         }}
       />
       <GamesStack.Screen
@@ -246,7 +307,4 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: 120,
   },
-  // bottomNav: {
-  //   height: 68,
-  // },
 });

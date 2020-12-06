@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from "axios";
-import gameIds from "../data/gameIds";
+import { Text, View } from "../components/Themed";
+import * as gameIds from "../data/gameIds";
 import { Ionicons } from "@expo/vector-icons";
 import { hasKey } from "../utils/index";
 import GameListItem from "../components/games/GameListItem";
@@ -22,7 +23,7 @@ import FilterModalHeader from "../components/games/FilterModalHeader";
 import GenreMenu from "../components/games/FilterMenus/GenreMenu";
 import LanguageMenu from "../components/games/FilterMenus/LanguageMenu";
 import PriceMenu from "../components/games/FilterMenus/PriceMenu";
-type ExtractedGameData = {
+export type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
   header_image: string;
@@ -31,6 +32,8 @@ type ExtractedGameData = {
   about_the_game: string;
   description: string;
   developers: Array<string>;
+  screenshots: Record<string, unknown>;
+  metacritic: Array<string>;
   platforms: Array<string>;
   media: Array<string>;
   rating: Array<string>;
@@ -44,9 +47,6 @@ type GamesHomeProps = {
 
 type GamesHomeState = {
   allGames: Record<string, unknown>[];
-  recommendedGames: Record<string, unknown>[];
-  featuredGames: Record<string, unknown>[];
-  topSellingGames: Record<string, unknown>[];
   selectedIndex: number;
   modalVisible: boolean;
   platforms: OperatingSystem[];
@@ -67,10 +67,7 @@ export default class GamesHome extends React.Component<
     super(props);
     this.state = {
       allGames: [],
-      recommendedGames: [],
-      featuredGames: [],
-      topSellingGames: [],
-      selectedIndex: 1,
+      selectedIndex: 0,
       modalVisible: true,
       platforms: [],
       genres: [],
@@ -118,94 +115,58 @@ export default class GamesHome extends React.Component<
         });
     });
   };
-  getFeaturedGames = () => {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`http://store.steampowered.com/api/featuredcategories/`)
-        .then(
-          (res) => {
-            this.setState(
-              {
-                featuredGames: res.data.specials.items,
-                topSellingGames: res.data.top_sellers.items,
-              },
-              () => {
-                resolve(res.data.top_sellers);
-              },
-            );
-          },
-          (reason) => {
-            console.log(reason);
-          },
-        )
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  };
+
   getAllGames = () => {
-    const allGamePromises = gameIds.map((game) => {
+    const allGamePromises = gameIds.all.map((game) => {
       return this.getGameDetails(game.appid);
     });
     Promise.all(allGamePromises);
   };
-  featuredGamesList = () => {
-    if (!this.state.featuredGames) return;
-    return this.state.featuredGames.map((game: any, index) => {
-      return (
-        <GameListItem
-          key={index}
-          gameId={game.id}
-          gameName={game.name}
-          gameImage={game.small_capsule_image}
-          genres={game.genres}
-          description={game.description}
-          publishers={game.developers}
-          platforms={game.platforms}
-          media={game.screenshots}
-          rating={game.metacritic}
-        />
-      );
+  gamesList = (gameSet, ranked) => {
+    const recGamesIds = gameSet.map((game) => {
+      return game.appid;
     });
-  };
-  topSellingGamesList = () => {
-    if (!this.state.topSellingGames) return;
-    return this.state.topSellingGames.map((game: any, index) => {
-      return (
-        <GameListItem
-          key={index}
-          gameId={game.id}
-          gameName={`${index + 1}. ${game.name}`}
-          gameImage={game.small_capsule_image}
-          genres={game.genres}
-          description={game.description}
-          publishers={game.developers}
-          platforms={game.platforms}
-          media={game.screenshots}
-          rating={game.metacritic}
-        />
-      );
-    });
-  };
-  recommendedGamesList = () => {
-    return this.state.allGames.map((game: any, index) => {
-      // let [appId, res] = game;
-      // let data = res[appId].data;
-      // console.log(game);
-      return (
-        <GameListItem
-          key={index}
-          gameId={game.steam_appid}
-          gameName={game.name}
-          gameImage={game.header_image}
-          genres={game.genres}
-          description={game.description}
-          publishers={game.publishers}
-          platforms={game.platforms}
-          media={game.media}
-          rating={game.rating}
-        />
-      );
+    const allGames = this.state.allGames;
+    const recGameDetails = allGames.filter((game) =>
+      recGamesIds.includes(game.steam_appid),
+    );
+
+    return recGameDetails.map((game: any, index) => {
+      if (game.name === "failed") {
+        return <Text key={index}>{game.name}</Text>;
+      }
+      if (ranked) {
+        return (
+          <GameListItem
+            key={index}
+            gameId={game.steam_appid}
+            gameName={game.name}
+            gameImage={game.header_image}
+            genres={game.genres}
+            ranking={index + 1}
+            description={game.description}
+            publishers={game.publishers}
+            platforms={game.platforms}
+            media={game.media}
+            rating={game.rating}
+          />
+        );
+      } else {
+        return (
+          <GameListItem
+            key={index}
+            gameId={game.steam_appid}
+            gameName={game.name}
+            gameImage={game.header_image}
+            genres={game.genres}
+            description={game.description}
+            publishers={game.publishers}
+            platforms={game.platforms}
+            media={game.media}
+            rating={game.rating}
+          />
+        );
+      }
     });
   };
   extractStatus = (resultData: { [key: string]: any }) => {
@@ -292,7 +253,6 @@ export default class GamesHome extends React.Component<
   }
 
   componentDidMount() {
-    this.getFeaturedGames();
     this.getAllGames();
   }
   setMenu(menu: string) {
@@ -531,10 +491,10 @@ export default class GamesHome extends React.Component<
         </View>
         <ScrollView style={styles.container}>
           {this.state.selectedIndex === 0
-            ? this.recommendedGamesList()
+            ? this.gamesList(gameIds.rec, false)
             : this.state.selectedIndex == 1
-            ? this.topSellingGamesList()
-            : this.featuredGamesList()}
+            ? this.gamesList(gameIds.top, true)
+            : this.gamesList(gameIds.featured, false)}
         </ScrollView>
       </View>
     );

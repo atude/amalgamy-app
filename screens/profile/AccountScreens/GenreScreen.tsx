@@ -15,30 +15,34 @@ import { ProfileMenuWrapper } from "../../../components/profile/ProfileMenuWrapp
 import ProfileMenuSet from "../../../components/profile/ProfileMenuSet";
 import MenuItemWithCheck from "../../../components/profile/MenuItemWithCheck";
 
-const AccessiblityOptions: Array<Option> = [
+const GenreOptions: Array<Option> = [
   {
     optionText: "Strategy",
-    checkbox: false,
+    checkbox: true,
   },
   {
-    optionText: "Eye-tracking",
-    checkbox: false,
+    optionText: "Party Games",
+    checkbox: true,
   },
   {
-    optionText: "Screen-reader support",
-    checkbox: false,
+    optionText: "Action",
+    checkbox: true,
   },
   {
-    optionText: "Voice control",
-    checkbox: false,
+    optionText: "Adventure",
+    checkbox: true,
   },
   {
-    optionText: "One-handed gameplay",
-    checkbox: false,
+    optionText: "Fantasy",
+    checkbox: true,
   },
   {
-    optionText: "Colour-blindess support",
-    checkbox: false,
+    optionText: "Casual",
+    checkbox: true,
+  },
+  {
+    optionText: "Indie",
+    checkbox: true,
   },
 ];
 

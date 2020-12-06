@@ -1,4 +1,4 @@
-export default [
+export const all = [
   {
     appid: 945360,
     name: "Among Us",
@@ -39,10 +39,7 @@ export default [
     appid: 1222670,
     name: "The Sims™ 4",
   },
-  {
-    appid: 730,
-    name: "Counter-Strike: Global Offensive",
-  },
+
   {
     appid: 620,
     name: "Portal 2",
@@ -387,4 +384,188 @@ export default [
     appid: 381210,
     name: "Dead by Daylight",
   },
+  {
+    appid: 839770,
+    name: "Phoenix Point: Year One Edition",
+  },
+  {
+    appid: 730,
+    name: "Counter-Strike: Global Offensive",
+  },
+  {
+    appid: 1263850,
+    name: "Football Manager 2021",
+  },
+  {
+    appid: 548430,
+    name: "Deep Rock Galactic ",
+  },
+  {
+    appid: 1315750,
+    name: "Total War: Warhammer II",
+  },
+  {
+    appid: 1404210,
+    name: "Red Dead Online",
+  },
+  {
+    appid: 606880,
+    name: "GreedFall",
+  },
+  {
+    appid: 848480,
+    name: "Creeper World 4",
+  },
+  {
+    appid: 88801,
+    name: "Dying Light Enhanced Edition",
+  },
+  {
+    appid: 686810,
+    name: "Hell Let Loose",
+  },
+  {
+    appid: 1214420,
+    name: "Tom Clancy's Rainbow Six Siege",
+  },
+  {
+    appid: 899770,
+    name: "Last Epoch",
+  },
+  {
+    appid: 1154840,
+    name: "Shadow Empire",
+  },
+  {
+    appid: 244850,
+    name: "Space Engineers",
+  },
 ];
+export const rec = [
+  {
+    appid: 431240,
+    name: "Golf With Your Friends",
+  },
+  {
+    appid: 1091500,
+    name: "Cyberpunk 2077",
+  },
+  {
+    appid: 945360,
+    name: "Among Us",
+  },
+  {
+    appid: 739630,
+    name: "Phasmophobia",
+  },
+  {
+    appid: 242050,
+    name: "Assassin's Creed IV Black Flag",
+  },
+  {
+    appid: 311560,
+    name: "Assassin's Creed Rogue",
+  },
+  {
+    appid: 418370,
+    name: "Resident Evil 7 Biohazard",
+  },
+  {
+    appid: 1238840,
+    name: "Battlefield 1 ™",
+  },
+  {
+    appid: 105600,
+    name: "Terraria",
+  },
+  {
+    appid: 361420,
+    name: "ASTRONEER",
+  },
+];
+export const featured = [
+  {
+    appid: 839770,
+    name: "Phoenix Point: Year One Edition",
+  },
+  {
+    appid: 606880,
+    name: "GreedFall",
+  },
+  {
+    appid: 548430,
+    name: "Deep Rock Galactic ",
+  },
+  {
+    appid: 848480,
+    name: "Creeper World 4",
+  },
+  {
+    appid: 88801,
+    name: "Dying Light Enhanced Edition",
+  },
+  {
+    appid: 686810,
+    name: "Hell Let Loose",
+  },
+  {
+    appid: 1214420,
+    name: "Tom Clancy's Rainbow Six Siege",
+  },
+  {
+    appid: 899770,
+    name: "Last Epoch",
+  },
+  {
+    appid: 1154840,
+    name: "Shadow Empire",
+  },
+  {
+    appid: 244850,
+    name: "Space Engineers",
+  },
+];
+export const top = [
+  {
+    appid: 1091500,
+    name: "Cyberpunk 2077",
+  },
+  {
+    appid: 730,
+    name: "Counter-Strike: Global Offensive",
+  },
+  {
+    appid: 739630,
+    name: "Phasmophobia",
+  },
+  {
+    appid: 839770,
+    name: "Phoenix Point: Year One Edition",
+  },
+  {
+    appid: 945360,
+    name: "Among Us",
+  },
+  {
+    appid: 1263850,
+    name: "Football Manager 2021",
+  },
+  {
+    appid: 548430,
+    name: "Deep Rock Galactic",
+  },
+  {
+    appid: 1315750,
+    name: "Total War: Warhammer II",
+  },
+  {
+    appid: 1404210,
+    name: "Red Dead Online",
+  },
+  {
+    appid: 606880,
+    name: "GreedFall",
+  },
+];
+
+// export const;

@@ -1,21 +1,6 @@
 import * as React from "react";
-import { ProfileAvatar } from "../../components/profile/ProfileAvatar";
-import ProfileMenuItem from "../../components/profile/ProfileMenuItem";
-import { Layout, ScrollableLayout, Text, View } from "../../components/Themed";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import { types } from "@babel/core";
-import { SubMenu, User, Option } from "../../types";
-import { ProfileMenuWrapper } from "../../components/profile/ProfileMenuWrapper";
+import { SubMenu, Option } from "../../types";
 import ProfileMenuSet from "../../components/profile/ProfileMenuSet";
-
-const DUMMY_PROFILE = {
-  firstName: "Mozamel",
-  lastName: "Anwary",
-  avatar: "../../assets/images/icon.png",
-  email: "atude@soundcloud.com",
-  devices: ["fat ass", "dummy thicc"],
-  genres: ["yes", "indeed"],
-};
 
 const UserInfo = [
   {
@@ -77,10 +62,3 @@ const menus: Array<SubMenu> = [
 export default function AccountScreen() {
   return <ProfileMenuSet subMenus={menus} />;
 }
-
-const styles = StyleSheet.create({
-  menuContainer: {
-    flex: 1,
-    alignContent: "flex-start",
-  },
-});
