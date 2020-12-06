@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SubMenu, User, Option } from "../../types";
+import { SubMenu, Option } from "../../types";
 import ProfileMenuSet from "../../components/profile/ProfileMenuSet";
 
 const UserInfo = [

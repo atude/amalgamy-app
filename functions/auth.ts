@@ -1,6 +1,4 @@
 import Firebase from "../config";
-import { ErrorMessage, User } from "../types";
-import { getUser } from "./users";
 
 const usersRef = Firebase.firestore().collection("users");
 
