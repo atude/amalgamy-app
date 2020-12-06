@@ -92,7 +92,7 @@ export const Button = (props: ButtonProps) => {
   const { text, style, lightColor, darkColor, ...otherProps } = props;
   const borderColor = useThemeColor(
     { light: lightColor, dark: darkColor },
-    "purpleText",
+    "primary",
   );
 
   return (
