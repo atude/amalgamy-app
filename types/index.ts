@@ -1,4 +1,5 @@
 export type ColorScheme = "light" | "dark";
+export type ErrorMessage = string;
 
 export type User = {
   email: string;
