@@ -7,7 +7,6 @@ import {
 } from "@react-navigation/stack";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
-import { dummyGame } from "../screens/GPDummyData";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
 import useColorScheme from "../hooks/useColorScheme";
@@ -24,6 +23,7 @@ import {
 } from "../types/navigation";
 import SocialScreen from "../screens/SocialScreen";
 import ChatScreen from "../screens/social/ChatScreen";
+import GamePage from "../screens/game-page/GamePage";
 import { AppContext } from "../context";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -180,6 +180,13 @@ function GamesNavigator() {
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
+        }}
+      />
+      <GamesStack.Screen
+        name="GamePage"
+        component={GamePage}
+        options={{
+          headerShown: false,
         }}
       />
     </GamesStack.Navigator>
