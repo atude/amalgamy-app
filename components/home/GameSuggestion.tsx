@@ -2,6 +2,8 @@ import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../constants/GlobalStyles";
 import { Text, View } from "../Themed";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type Props = {
   gameId: string;
@@ -10,14 +12,42 @@ type Props = {
 };
 
 const GameSuggestion = (props: Props) => {
-  const { gameId, gameTitle, gameImage } = props;
+  const {
+    gameId,
+    gameTitle,
+    gameImage,
+    genres,
+    description,
+    media,
+    rating,
+    publishers,
+    platforms,
+  } = props;
+  const navigation = useNavigation<StackNavigationProp<any>>();
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.push("GamePageHome", {
+          gameId: gameId,
+          name: gameTitle,
+          icon: gameImage,
+          genres: genres,
+          description: description,
+          media: media,
+          rating: rating,
+          publishers: publishers,
+          platforms: platforms,
+        })
+      }
+    >
       <View style={styles.container}>
         <Image
           style={styles.image}
           // TODO: get from image source
-          source={require("../../assets/images/icon.png")}
+          source={{
+            uri: gameImage,
+          }}
         />
         <View style={styles.textWrapContainer}>
           <Text style={styles.caption}>{gameTitle}</Text>
