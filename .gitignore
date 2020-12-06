@@ -17,4 +17,4 @@ web-build/
 .idea/*
 
 # keys
-./config/firebase.config.ts
+config/firebase.config.ts
