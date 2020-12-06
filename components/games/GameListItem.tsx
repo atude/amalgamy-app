@@ -9,6 +9,7 @@ import layout from "../../constants/ScreenLayout";
 
 type Props = {
   gameId: string;
+  ranking: number;
   gameName: string;
   gameImage: string;
   genres?: GameGenre[];
@@ -29,6 +30,7 @@ export function processGenres(genres: GameGenre[]): string {
 const GameListItem = (props: Props) => {
   const {
     gameId,
+    ranking,
     gameName,
     gameImage,
     genres,
@@ -64,7 +66,10 @@ const GameListItem = (props: Props) => {
           }}
         />
         <View style={styles.activityTextContainer}>
-          <Text style={styles.gameName}>{gameName}</Text>
+          <Text style={styles.gameName}>
+            {ranking ? `${ranking.toString()}. ` : ""}
+            {gameName}
+          </Text>
           <View style={GlobalStyles.styles.textWrapContainer}>
             <Text style={GlobalStyles.styles.textWrap}>
               {genres ? processGenres(genres) : <></>}

@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import axios from "axios";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Text, View, ScrollableLayout } from "../../components/Themed";
 import useColorScheme from "../../hooks/useColorScheme";
@@ -72,7 +71,7 @@ export default function GamePage({ route, navigation }) {
             </FontAwesome>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={shareGame.bind(gameInfo.name)}>
+          <TouchableOpacity onPress={shareGame}>
             <Ionicons
               name="ios-share"
               style={{ color: Colors[colorScheme].primary, marginTop: 16 }}
