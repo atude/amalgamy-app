@@ -154,10 +154,12 @@ function extractDescription(desc) {
   desc = desc.replace(/<br>/gm, "\n");
   // desc = desc.replace(/<\/h2>/gm, "\n");
   desc = desc.replace(/<h2 class="bb_tag">/gm, "\n");
-
-  return (
-    desc.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "").slice(0, 350) + "..."
-  );
+  desc =
+    desc
+      .replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "")
+      .slice(0, 350)
+      .trim() + "...";
+  return desc;
 }
 function processMedia(media) {
   media = media.slice(0, 3);
