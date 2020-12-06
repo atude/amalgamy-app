@@ -12,7 +12,7 @@ import { ListItem } from "react-native-elements";
 import { OperatingSystem, Genre, Language } from "../../types/index";
 import CategoryValueButton from "./CategoryValueButton";
 import layout from "../../constants/ScreenLayout";
-import { genresList } from "../../constants/FilterValues";
+import { genresList, languageList } from "../../constants/FilterValues";
 type Props = {
   removePlatform(value: OperatingSystem): void;
   addPlatform(value: OperatingSystem): void;
@@ -21,6 +21,9 @@ type Props = {
   removeGenre(value: string): void;
   platformFilters: OperatingSystem[];
   openMenu(value: string): void;
+  languageFilters: string[];
+  addLanguage(value: string): void;
+  removeLanguage(value: string): void;
 };
 
 const FiltersBottomSheet = (props: Props) => {
@@ -99,26 +102,54 @@ const FiltersBottomSheet = (props: Props) => {
         <ListItem.Content>
           <ListItem.Title style={styles.titleStyle}>Price</ListItem.Title>
         </ListItem.Content>
-        {props.genreFilters.length === 0 ? null : (
+        {props.languageFilters.length === 0 ? null : props.languageFilters
+            .length <= 3 ? (
           <ListItem.Subtitle style={styles.subtitle}>
-            {props.genreFilters.join(" ")}
+            {props.languageFilters.join(", ")}
           </ListItem.Subtitle>
+        ) : (
+          <ListItem.Subtitle>({props.genreFilters.length})</ListItem.Subtitle>
         )}
         <ListItem.Chevron />
       </ListItem>
 
-      <ListItem Component={TouchableOpacity}>
+      <ListItem
+        Component={TouchableOpacity}
+        onPress={() => props.openMenu("languages")}
+      >
         <Entypo name="language" size={24} color="black" />
         <ListItem.Content>
           <ListItem.Title style={styles.titleStyle}>Languages</ListItem.Title>
         </ListItem.Content>
-        {props.genreFilters.length === 0 ? null : (
+        {props.languageFilters.length === 0 ? null : props.languageFilters
+            .length <= 1 ? (
           <ListItem.Subtitle style={styles.subtitle}>
-            {props.genreFilters.join(" ")}
+            {props.languageFilters.join(", ")}
+          </ListItem.Subtitle>
+        ) : (
+          <ListItem.Subtitle>
+            ({props.languageFilters.length})
           </ListItem.Subtitle>
         )}
         <ListItem.Chevron />
       </ListItem>
+      <ScrollView
+        style={styles.categoryValuesContainer}
+        contentContainerStyle={styles.contentContainer}
+        horizontal
+      >
+        {languageList.map((genreName, i) => {
+          return (
+            <CategoryValueButton
+              key={i}
+              add={props.addLanguage}
+              remove={props.removeLanguage}
+              title={genreName}
+              parentFilters={props.languageFilters}
+            />
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };

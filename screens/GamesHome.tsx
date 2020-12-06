@@ -14,6 +14,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { OperatingSystem, Genre, Language } from "../types/index";
 import FilterModalHeader from "../components/games/FilterModalHeader";
 import GenreMenu from "../components/games/FilterMenus/GenreMenu";
+import LanguageMenu from "../components/games/FilterMenus/LanguageMenu";
 type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
@@ -55,8 +56,8 @@ export default class GamesHome extends React.Component<
       selectedIndex: 1,
       modalVisible: true,
       platforms: [],
-      genres: ["Casual"],
-      languages: [],
+      genres: [],
+      languages: ["English"],
       priceMin: 0,
       priceMax: 1000,
       menuItem: "filters",
@@ -227,10 +228,27 @@ export default class GamesHome extends React.Component<
       },
     );
   }
-  removeGenreFilter(genre: OperatingSystem) {
+  removeGenreFilter(genre: string) {
     this.setState(({ genres }) => ({
       genres: genres.filter((val) => {
         return val != genre;
+      }),
+    }));
+  }
+  addLanguageFilter(language: Language) {
+    this.setState(
+      ({ languages }) => ({
+        languages: [...languages, language],
+      }),
+      () => {
+        console.log(`added lang: ${language}`);
+      },
+    );
+  }
+  removeLanguageFilter(language: string) {
+    this.setState(({ languages }) => ({
+      languages: languages.filter((val) => {
+        return val != language;
       }),
     }));
   }
@@ -267,7 +285,7 @@ export default class GamesHome extends React.Component<
             },
           }}
         >
-          <FilterModalHeader 
+          <FilterModalHeader
             setMenu={this.setMenu.bind(this)}
             menu={this.state.menuItem}
           />
@@ -280,6 +298,12 @@ export default class GamesHome extends React.Component<
                 removeGenre={this.removeGenreFilter.bind(this)}
                 addGenre={this.addGenreFilter.bind(this)}
               />
+            ) : this.state.menuItem === "languages" ? (
+              <LanguageMenu
+                languageFilters={this.state.languages}
+                removeLanguage={this.removeLanguageFilter.bind(this)}
+                addLanguage={this.addLanguageFilter.bind(this)}
+              />
             ) : (
               <FiltersBottomSheet
                 removePlatform={this.removePlatformFilter.bind(this)}
@@ -289,6 +313,9 @@ export default class GamesHome extends React.Component<
                 addGenre={this.addGenreFilter.bind(this)}
                 platformFilters={this.state.platforms}
                 openMenu={this.setMenu.bind(this)}
+                languageFilters={this.state.languages}
+                removeLanguage={this.removeLanguageFilter.bind(this)}
+                addLanguage={this.addLanguageFilter.bind(this)}
               />
             )}
           </View>

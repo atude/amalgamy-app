@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import * as React from "react";
-import { Text, StyleSheet, View,  TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import Colors from "../../constants/Colors";
 import layout from "../../constants/ScreenLayout";
 type Props = {
@@ -17,15 +17,18 @@ export default function FilterModalHeader(props: Props) {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems:"center",
+              alignItems: "center",
             }}
           >
-            <TouchableOpacity style={{ flex: 1, paddingLeft: 10 }} onPress={() => setMenu('filters')}>
+            <TouchableOpacity
+              style={{ flex: 1, paddingLeft: 10 }}
+              onPress={() => setMenu("filters")}
+            >
               <Text style={{ fontSize: 20, color: "red", fontWeight: "200" }}>
                 <AntDesign name="left" size={24} color="white" />
               </Text>
             </TouchableOpacity>
-            <View style={{ flex: 1, paddingLeft: 30, paddingRight: 20 }}>
+            <View style={{ flex: 2, justifyContent: "center" }}>
               <Text style={styles.title}>{menu}</Text>
             </View>
             <View style={{ flex: 1 }}></View>
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "400",
     color: "white",
+    textAlign: "center",
     paddingBottom: 10,
     letterSpacing: 1.5,
     textTransform: "capitalize",

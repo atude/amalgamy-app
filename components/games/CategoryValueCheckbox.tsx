@@ -4,7 +4,9 @@ import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import Colors from "../../constants/Colors";
 import layout from "../../constants/ScreenLayout";
 import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useEffect } from "react";
+import { ListItem } from "react-native-elements";
 
 type Props = {
   title: string;
@@ -30,17 +32,25 @@ export default function CategoryValueCheckbox(props: Props) {
   });
   return (
     <TouchableOpacity onPress={handleSelect}>
-      <View style={selected ? styles.containerSelected : styles.container}>
-        {props.icon ? (
-          <FontAwesome
-            name={props.icon}
-            size={24}
-            style={selected ? styles.selectedText : styles.text}
-          />
-        ) : null}
-        <Text style={selected ? styles.selectedText : styles.text}>
-          {props.title}
-        </Text>
+      <View>
+        <ListItem style={styles.container} bottomDivider>
+          {selected ? (
+            <Ionicons
+              name="ios-checkbox"
+              size={24}
+              color={Colors.light.primary}
+            />
+          ) : (
+            <Ionicons
+              name="ios-checkbox-outline"
+              size={24}
+              color={Colors.light.primary}
+            />
+          )}
+          <ListItem.Content>
+            <ListItem.Title style={styles.text}>{props.title}</ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
       </View>
     </TouchableOpacity>
   );
@@ -48,28 +58,14 @@ export default function CategoryValueCheckbox(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
-    height: 30,
-    marginRight: 15,
-    paddingLeft: 10,
-    paddingRight: 18,
-    backgroundColor: Colors.light.lightgrey2,
-  },
-  containerSelected: {
-    flex: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
-    height: 30,
-    marginRight: 15,
-    paddingLeft: 10,
-    paddingRight: 18,
-    backgroundColor: Colors.light.primary,
+    width: "100%",
+    padding: 10,
+    paddingHorizontal: 25,
   },
   text: {
     color: Colors.light.darkgrey,

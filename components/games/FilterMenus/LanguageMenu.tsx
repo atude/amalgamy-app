@@ -3,33 +3,33 @@ import * as React from "react";
 import { Text, StyleSheet, View, ScrollView } from "react-native";
 import Colors from "../../../constants/Colors";
 import layout from "../../../constants/ScreenLayout";
-import { genresList } from "../../../constants/FilterValues";
+import { languageList } from "../../../constants/FilterValues";
 import CategoryValueCheckbox from "../CategoryValueCheckbox";
 import Searchbar from "../Searchbar";
 import { useState } from "react";
 type Props = {
-  genreFilters: string[];
-  addGenre(value: string): void;
-  removeGenre(value: string): void;
+  languageFilters: string[];
+  addLanguage(value: string): void;
+  removeLanguage(value: string): void;
 };
-export default function GenreMenu(props: Props) {
-  const [filtered, setFiltered] = useState(genresList);
+export default function LanguageMenu(props: Props) {
+  const [filtered, setFiltered] = useState(languageList);
   return (
     <View style={styles.container}>
       <Searchbar
-        placeholder="Search for Genres..."
-        list={genresList}
+        placeholder="Search for Languages..."
+        list={languageList}
         setFiltered={setFiltered}
       />
       <ScrollView style={{ flexGrow: 1 }}>
-        {filtered.map((genreName: string, i: number) => {
+        {filtered.map((languageName: string, i: number) => {
           return (
             <CategoryValueCheckbox
               key={i}
-              add={props.addGenre}
-              remove={props.removeGenre}
-              title={genreName}
-              parentFilters={props.genreFilters}
+              add={props.addLanguage}
+              remove={props.removeLanguage}
+              title={languageName}
+              parentFilters={props.languageFilters}
             />
           );
         })}
