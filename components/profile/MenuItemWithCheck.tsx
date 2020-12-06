@@ -9,42 +9,28 @@ import GlobalStyles from "../../constants/GlobalStyles";
 import { CheckBox } from "react-native-elements";
 
 type Props = {
-  option: Option;
+  optionText: string;
+  checked: boolean;
 };
 
-const ProfileMenuItem = (props: Props) => {
-  const {
-    optionText,
-    pageLink,
-    icon,
-    valueText,
-    checkbox,
-    checkboxValue,
-  } = props.option;
+const MenuItemWithCheck = (props: Props) => {
+  const { optionText, checked } = props;
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(pageLink)}>
+    <TouchableOpacity>
       <View style={styles.container}>
         <Text style={[styles.optionText, GlobalStyles.styles.paragraphText]}>
           {optionText}
         </Text>
         <View style={styles.iconContainer}>
-          {icon && <Ionicons name={icon} size={20} color="black" />}
+          <CheckBox checked={false} />
         </View>
-        {valueText && (
-          <Text style={[styles.valueText, GlobalStyles.styles.paragraphText]}>
-            {valueText}
-          </Text>
-        )}
-        {(checkbox === false || checkbox === true) && (
-          <CheckBox checked={checkbox} />
-        )}
       </View>
     </TouchableOpacity>
   );
 };
 
-export default ProfileMenuItem;
+export default MenuItemWithCheck;
 
 const styles = StyleSheet.create({
   container: {

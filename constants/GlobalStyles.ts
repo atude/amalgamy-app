@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Colors from "./Colors";
 
 const consts = {
   borderRadius: 11,
@@ -17,6 +18,16 @@ export const styles = StyleSheet.create({
   textWrap: {
     flex: 1,
   },
+  textInput: {
+    borderWidth: 1,
+    borderColor: Colors.light.primary,
+    borderRadius: 11,
+    margin: 10,
+    padding: 10,
+  },
+  paragraphText: {
+    fontSize: 18,
+  }
 });
 
 export default {

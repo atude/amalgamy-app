@@ -74,7 +74,8 @@ export type Option = {
   optionText: string;
   icon?: string;
   valueText?: string;
-  pageLink: string;
+  pageLink?: string;
+  checkbox?: boolean;
 };
 
 export type SubMenu = {

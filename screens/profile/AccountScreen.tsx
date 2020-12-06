@@ -19,11 +19,6 @@ const DUMMY_PROFILE = {
 
 const UserInfo = [
   {
-    optionText: "Username",
-    pageLink: "ChangeUsernameScreen",
-    valueText: "cyberscopes",
-  },
-  {
     optionText: "Email",
     pageLink: "ChangeEmailScreen",
     valueText: "atude@cyberscopic.net",

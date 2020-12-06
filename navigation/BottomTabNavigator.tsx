@@ -25,6 +25,8 @@ import SocialScreen from "../screens/SocialScreen";
 import ChatScreen from "../screens/social/ChatScreen";
 import GamePage from "../screens/game-page/GamePage";
 import { AppContext } from "../context";
+import ChangeEmailScreen from "../screens/profile/AccountScreens/ChangeEmailScreen";
+import DevicesScreen from "../screens/profile/AccountScreens/DevicesScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -160,7 +162,26 @@ function ProfileNavigator() {
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
-          ...TransitionPresets.ModalTransition,
+        }}
+      />
+      <ProfileStack.Screen
+        name="ChangeEmailScreen"
+        component={ChangeEmailScreen}
+        options={{
+          headerTitle: "Change Email",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="DevicesScreen"
+        component={DevicesScreen}
+        options={{
+          headerTitle: "Operating Systems and Deviecs",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
         }}
       />
     </ProfileStack.Navigator>

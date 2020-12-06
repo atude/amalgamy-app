@@ -105,6 +105,24 @@ export const Button = (props: ButtonProps) => {
   );
 };
 
+export const BigButton = (props: ButtonProps) => {
+  const { text, style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "primary",
+  );
+  const textColor = Colors.light.background;
+
+  return (
+    <TouchableOpacity
+      style={[{ backgroundColor }, style, styles.bigButton]}
+      {...otherProps}
+    >
+      <Text style={{ color: textColor }}>{text}</Text>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
   layout: {
     padding: 24,
@@ -118,5 +136,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingVertical: 6,
     paddingHorizontal: 8,
+  },
+  bigButton: {
+    borderRadius: GlobalStyles.consts.borderRadius,
+    margin: 10,
+    padding: 10,
+    alignItems: "center",
   },
 });
