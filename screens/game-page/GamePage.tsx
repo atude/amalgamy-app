@@ -9,16 +9,11 @@ import {
 import { Game } from "../../types/index";
 import axios from "axios";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import HollowButton from "../../components/HollowButton";
 import { Text, View, ScrollableLayout } from "../../components/Themed";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
-import { useNavigation } from "@react-navigation/native";
 import { processGenres } from "../../components/games/GameListItem";
-import Game
-interface IGamePageProps {
-  gameInfo: Game;
-}
+import GameSuggestionContainer from "../../components/home/GameSugestionContainer";
 
 export default function GamePage({ route, navigation }) {
   const colorScheme = useColorScheme();
@@ -30,7 +25,7 @@ export default function GamePage({ route, navigation }) {
       <View
         style={[
           styles.rowContainer,
-          { justifyContent: "space-between", marginBottom: 32 },
+          { justifyContent: "space-between", marginBottom: 32, marginTop: 64 },
         ]}
       >
         <View style={styles.rowContainer}>
@@ -106,7 +101,7 @@ export default function GamePage({ route, navigation }) {
       </Text>
 
       <ScrollView
-        horizontal="true"
+        horizontal
         contentContainerStyle={[styles.rowContainer, { marginBottom: 32 }]}
       >
         {gameInfo.media ? (
@@ -125,25 +120,31 @@ export default function GamePage({ route, navigation }) {
       </ScrollView>
 
       <Text style={styles.h2}>Platforms</Text>
-      <View style={[styles.rowContainer, { marginBottom: 12 }]}>
-        {processPlatforms(gameInfo.platforms).map((platform) => {
-          return (
-            <View
-              key={platform}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              {platformIcon(platform)}
-              <Text style={[{ marginRight: 16 }, styles.p]}>{platform}</Text>
-            </View>
-          );
-        })}
+      <View style={[styles.rowContainer, { marginBottom: 24 }]}>
+        {gameInfo.platforms ? (
+          processPlatforms(gameInfo.platforms).map((platform) => {
+            return (
+              <View
+                key={platform}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                {platformIcon(platform)}
+                <Text style={[{ marginRight: 16 }, styles.p]}>{platform}</Text>
+              </View>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </View>
 
-      <Text style={styles.h2}>You May Like</Text>
+      <Text style={[styles.h2, { marginBottom: 12 }]}>You May Like</Text>
+      <GameSuggestionContainer></GameSuggestionContainer>
+      <View style={{ marginBottom: 20 }}></View>
     </ScrollableLayout>
   );
 }
@@ -163,12 +164,10 @@ function processMedia(media) {
   const processed = media.map((m) => {
     return m.path_thumbnail;
   });
-  // console.log(processed);
   return processed;
 }
 function processPlatforms(platforms) {
   let buttons = [];
-  console.log(platforms);
   if (platforms.windows) {
     buttons.push("Windows");
   }
@@ -178,9 +177,7 @@ function processPlatforms(platforms) {
   if (platforms.mac) {
     buttons.push("Mac");
   }
-  console.log(buttons);
   return buttons;
-  // return buttons;
 }
 function platformIcon(platform) {
   let icon;
@@ -200,7 +197,6 @@ function platformIcon(platform) {
         size={24}
       ></FontAwesome>
     );
-    console.log(icon);
   }
   return icon;
 }
@@ -225,7 +221,8 @@ function generatePlayers() {
 const styles = StyleSheet.create({
   button: {},
   scrollContainer: {
-    paddingVertical: 64,
+    // paddingTop: 64,
+    overflow: "visible",
   },
   title: {
     fontSize: 30,
@@ -249,6 +246,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    overflow: "visible",
   },
   h1: {
     fontWeight: "bold",
