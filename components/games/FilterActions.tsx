@@ -34,21 +34,16 @@ export default function FilterActions(props: Props) {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: 200,
+    bottom: layout.window.height - 612,
     width: layout.window.width,
-    flex: 2,
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "auto",
-    alignSelf: "flex-end",
   },
   button: {
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
     flex: 1,
-    height: 80,
+    height: 100,
     backgroundColor: Colors.light.primary,
   },
   text: {
