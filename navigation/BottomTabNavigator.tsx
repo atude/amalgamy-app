@@ -108,6 +108,14 @@ function HomeNavigator() {
           headerStyle: styles.headerContainer,
         }}
       />
+      <HomeStack.Screen
+        name="GamePageHome"
+        component={GamePage}
+        options={{
+          headerTitle: "",
+          headerStyle: styles.headerContainer,
+        }}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -264,8 +272,14 @@ function GamesNavigator() {
         component={GamePage}
         options={{
           headerTitle: "",
-          // headerTitleAlign: "left",
-          // headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <GamesStack.Screen
+        name="GamePageHome"
+        component={GamePage}
+        options={{
+          headerTitle: "",
           headerStyle: styles.headerContainer,
         }}
       />
@@ -282,8 +296,4 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: 120,
   },
-
-  // bottomNav: {
-  //   height: 68,
-  // },
 });

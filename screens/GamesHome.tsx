@@ -16,7 +16,7 @@ import FilterModalHeader from "../components/games/FilterModalHeader";
 import GenreMenu from "../components/games/FilterMenus/GenreMenu";
 import LanguageMenu from "../components/games/FilterMenus/LanguageMenu";
 import PriceMenu from "../components/games/FilterMenus/PriceMenu";
-type ExtractedGameData = {
+export type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
   header_image: string;
@@ -53,7 +53,7 @@ export default class GamesHome extends React.Component<
     super(props);
     this.state = {
       allGames: [],
-      selectedIndex: 1,
+      selectedIndex: 0,
       modalVisible: true,
       platforms: [],
       genres: [],
@@ -78,7 +78,7 @@ export default class GamesHome extends React.Component<
             if (!this.extractStatus(res.data)) {
               console.log(`failed: ${appId}`);
             } else {
-            this.setState(
+              this.setState(
                 {
                   allGames: [
                     ...this.state.allGames,
@@ -100,31 +100,7 @@ export default class GamesHome extends React.Component<
         });
     });
   };
-  getFeaturedGames = () => {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`http://store.steampowered.com/api/featuredcategories/`)
-        .then(
-          (res) => {
-            this.setState(
-              {
-                featuredGames: res.data.specials.items,
-                topSellingGames: res.data.top_sellers.items,
-              },
-              () => {
-                resolve(res.data.top_sellers);
-              },
-            );
-          },
-          (reason) => {
-            console.log(reason);
-          },
-        )
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  };
+
   getAllGames = () => {
     const allGamePromises = gameIds.all.map((game) => {
       return this.getGameDetails(game.appid);
