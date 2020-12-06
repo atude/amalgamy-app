@@ -64,7 +64,7 @@ export default class GamesHome extends React.Component<
             if (!this.extractStatus(res.data)) {
               console.log(`failed: ${appId}`);
             } else {
-              this.setState(
+            this.setState(
                 {
                   allGames: [
                     ...this.state.allGames,
