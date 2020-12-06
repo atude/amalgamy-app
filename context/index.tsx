@@ -36,7 +36,7 @@ export const AppContextProvider = (props: Props) => {
   const [currChatReceiver, setChatReceiver] = useState<
     ChatReceiver | undefined
   >();
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   return (
     <AppContext.Provider

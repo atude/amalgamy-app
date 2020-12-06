@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, useColorScheme } from "react-native";
 import Colors from "../../constants/Colors";
-import { styles } from "../../constants/GlobalStyles";
 import { ColorScheme, Message } from "../../types";
 import { Text, View } from "../Themed";
 
