@@ -1,8 +1,14 @@
 import * as React from "react";
-import { StyleSheet, ScrollView, Modal, Animated } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import axios from "axios";
-import { Text, View } from "../components/Themed";
 import gameIds from "../data/gameIds";
+import { Ionicons } from "@expo/vector-icons";
 import { hasKey } from "../utils/index";
 import GameListItem from "../components/games/GameListItem";
 import { ButtonGroup } from "react-native-elements";
@@ -27,9 +33,11 @@ type ExtractedGameData = {
   developers: Array<string>;
   platforms: Array<string>;
   media: Array<string>;
-  rating: Array<String>;
+  rating: Array<string>;
+  supported_languages: string;
+  price_overview: any;
 };
-
+const platformMapped = {};
 type GamesHomeProps = {
   navigation: any;
 };
@@ -47,6 +55,8 @@ type GamesHomeState = {
   priceMin: number;
   priceMax: number;
   menuItem: string;
+  filteredList: Record<string, unknown>[];
+  search: string;
 };
 
 export default class GamesHome extends React.Component<
@@ -68,6 +78,7 @@ export default class GamesHome extends React.Component<
       priceMin: -1,
       priceMax: -1,
       menuItem: "filters",
+      search: "",
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -143,7 +154,6 @@ export default class GamesHome extends React.Component<
     return this.state.featuredGames.map((game: any, index) => {
       return (
         <GameListItem
-          onPress={() => this.props.navigation.navigate("Profile")}
           key={index}
           gameId={game.id}
           gameName={game.name}
@@ -163,7 +173,6 @@ export default class GamesHome extends React.Component<
     return this.state.topSellingGames.map((game: any, index) => {
       return (
         <GameListItem
-          onPress={() => this.props.navigation.navigate("Profile")}
           key={index}
           gameId={game.id}
           gameName={`${index + 1}. ${game.name}`}
@@ -183,12 +192,8 @@ export default class GamesHome extends React.Component<
       // let [appId, res] = game;
       // let data = res[appId].data;
       // console.log(game);
-      if (game.name === "failed") {
-        return <Text key={index}>{game.name}</Text>;
-      }
       return (
         <GameListItem
-          onPress={() => this.props.navigation.navigate("Profile")}
           key={index}
           gameId={game.steam_appid}
           gameName={game.name}
@@ -218,10 +223,6 @@ export default class GamesHome extends React.Component<
       // console.log(data.metacritic);
       // console.log(data);
 
-      if (typeof data === "undefined") {
-        return { name: "failed" };
-      }
-
       return {
         name: data.name,
         platforms: data.platforms,
@@ -232,6 +233,8 @@ export default class GamesHome extends React.Component<
         publishers: data.developers,
         media: data.screenshots,
         rating: data.metacritic,
+        supported_languages: data.supported_languages,
+        price_overview: data.price_overview,
       };
     }
     return { name: "failed" };
@@ -317,14 +320,106 @@ export default class GamesHome extends React.Component<
       },
     );
   }
+  extractedGenresList = (genres: any) => {
+    return genres.map((gen: any) => {
+      return gen.description.toLowerCase();
+    });
+  };
+  filterGames = () => {
+    return new Promise((resolve, reject) => {
+      const filtered = this.state.allGames.filter((game: any) => {
+        const { platforms, genres, supported_languages, price_overview } = game;
+        const gameGenreList = this.extractedGenresList(genres);
+        let flag = true;
+        this.state.platforms.forEach((plat) => {
+          if (plat === "Mac OS X" && !platforms.mac) {
+            flag = false;
+          }
+          if (plat === "Windows" && !platforms.windows) {
+            flag = false;
+          }
+          if (plat === "Linux" && !platforms.linux) {
+            flag = false;
+          }
+        });
+
+        this.state.genres.forEach((genre) => {
+          if (!gameGenreList.includes(genre.toLowerCase())) {
+            flag = false;
+          }
+        });
+        if (supported_languages) {
+          this.state.languages.forEach((language) => {
+            if (
+              !supported_languages
+                .toLowerCase()
+                .includes(language.toLowerCase())
+            ) {
+              flag = false;
+            }
+          });
+        } else {
+          flag = false;
+        }
+        if (price_overview) {
+          const gamePrice = price_overview.final;
+          const minPrice = this.state.priceMin;
+          const maxPrice = this.state.priceMax;
+          if (maxPrice !== -1 && minPrice !== -1) {
+            if (minPrice !== -1 && minPrice > gamePrice) {
+              flag = false;
+            }
+            if (maxPrice !== -1 && maxPrice < gamePrice) {
+              flag = false;
+            }
+          }
+        }
+
+        return flag;
+      });
+      resolve(filtered);
+    });
+  };
   applyFilters() {
-    this.RBSheet.close()
+    this.RBSheet.close();
+    this.filterGames().then(
+      (res: any) => {
+        this.setState(
+          {
+            filteredList: res,
+          },
+          () => {
+            this.props.navigation.navigate("ResultsPage", { list: res });
+          },
+        );
+      },
+      (reason) => console.log(reason),
+    );
   }
+  handleSearch = (term: string) => {
+    this.setState({
+      search: term,
+    });
+  };
+  handleSubmit = () => {
+    this.setState(
+      ({ allGames, search }) => ({
+        filteredList: allGames.filter((game: any) => {
+          return game.name.toLowerCase().includes(search.toLowerCase().trim());
+        }),
+      }),
+      () => {
+        this.props.navigation.navigate("ResultsPage", {
+          list: this.state.filteredList,
+        });
+      },
+    );
+  };
   render() {
-    const buttons = ["Recommended", "Top Selling", "Featured"];
+    const buttons = ["For You", "Top Selling", "Featured"];
     const { selectedIndex } = this.state;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}>
         <RBSheet
           ref={(ref) => {
             this.RBSheet = ref;
@@ -389,15 +484,34 @@ export default class GamesHome extends React.Component<
             )}
           </View>
         </RBSheet>
+        <View style={styles.searchBar}>
+          <TextInput
+            onChangeText={(value) => this.handleSearch(value)}
+            onSubmitEditing={() => this.handleSubmit()}
+            placeholder={"Search for a game"}
+            value={this.state.search}
+            style={styles.searchInput}
+          />
+          {this.state.search !== "" ? (
+            <TouchableOpacity
+              style={styles.clear}
+              onPress={() => this.handleSearch("")}
+            >
+              <Ionicons name="ios-close" size={20} color={Colors.light.grey2} />
+            </TouchableOpacity>
+          ) : (
+            <Ionicons name="ios-search" size={20} color={Colors.light.grey2} />
+          )}
+        </View>
         <View style={styles.tabButtonsContainer}>
           <ButtonGroup
             onPress={this.updateIndex}
             selectedIndex={selectedIndex}
             buttons={buttons}
             containerStyle={{
-              height: 30,
-              borderRadius: 15,
-              width: layout.window.width - 60,
+              height: 40,
+              borderRadius: 30,
+              width: layout.window.width - 80,
             }}
             textStyle={{
               color: "black",
@@ -441,5 +555,24 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  searchBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: Colors.light.lightgrey3,
+    width: layout.window.width - 20,
+    marginTop: 20,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  searchInput: {
+    width: "90%",
+  },
+  clear: {
+    alignItems: "flex-end",
+    width: 40,
+    paddingRight: 15,
   },
 });

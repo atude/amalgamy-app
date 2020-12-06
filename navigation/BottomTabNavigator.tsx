@@ -15,6 +15,7 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import GamesHome from "../screens/GamesHome";
 import AccountScreen from "../screens/profile/AccountScreen";
+import GameResults from "../screens/GameResults";
 import {
   BottomTabParamList,
   HomeParamList,
@@ -220,6 +221,16 @@ function GamesNavigator() {
         component={GamePage}
         options={{
           headerShown: false,
+        }}
+      />
+      <GamesStack.Screen
+        name="ResultsPage"
+        component={GameResults}
+        options={{
+          headerTitle: "Search Results",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
         }}
       />
     </GamesStack.Navigator>
