@@ -340,8 +340,8 @@ export default class GamesHome extends React.Component<
             selectedIndex={selectedIndex}
             buttons={buttons}
             containerStyle={{
-              height: 30,
-              borderRadius: 15,
+              height: 40,
+              borderRadius: 100,
               width: layout.window.width - 60,
             }}
             textStyle={{

@@ -13,12 +13,24 @@ import Colors from "../../constants/Colors";
 import { processGenres } from "../../components/games/GameListItem";
 import GameSuggestionContainer from "../../components/home/GameSugestionContainer";
 import pickAccFeatures from "./AccessibilityFeatures";
+import { AppContext } from "../../context";
+import { addBookmark, getUser } from "../../functions/users";
 let gameName: string;
-export default function GamePage({ route, navigation }) {
-  const colorScheme = useColorScheme();
 
+export default function GamePage({ route, navigation }) {
+  const colorScheme = useColorScheme() ?? "light";
+  const { user, setUser } = React.useContext(AppContext);
   const gameInfo = route.params;
   gameName = gameInfo.name;
+
+  async function bookmarkGame() {
+    if (user) {
+      await addBookmark(user?.email, gameInfo.gameId);
+      const res = await getUser(user?.email);
+      if (res) setUser(res);
+    }
+  }
+
   return (
     <ScrollableLayout style={styles.scrollContainer}>
       <View
@@ -215,9 +227,7 @@ function platformIcon(platform: string) {
   }
   return icon;
 }
-function bookmarkGame() {
-  return;
-}
+
 const shareGame = async () => {
   try {
     const result = await Share.share({

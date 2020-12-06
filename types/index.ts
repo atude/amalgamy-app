@@ -11,7 +11,7 @@ export type User = {
   accessibilityFeatures?: AccessibilityFeature[];
   friendEmails?: string[];
   groups?: Group[];
-  // bookmarkedGames: Game[];
+  bookmarks: string[];
 };
 
 export type Device =
