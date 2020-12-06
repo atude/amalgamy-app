@@ -26,39 +26,40 @@ const SocialScreen = () => {
   const [search, setSearch] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchUsers = async () => {
-    const users = await getUsers();
-    setUsers(users);
-  };
-
-  const fetchFriends = async () => {
+  const fetchUsersAndFriends = async () => {
+    setLoading(true);
+    const currUsersAll = await getUsers();
+    const currUsers = currUsersAll.filter(
+      (thisUser) => thisUser.email !== user?.email,
+    );
     const friendEmails = user?.friendEmails;
-    const filteredFriends = users.filter((user) =>
+    const filteredFriends = currUsers.filter((user) =>
       friendEmails?.includes(user.email),
     );
+    setUsers(currUsers);
     setFriends(filteredFriends);
+    setLoading(false);
   };
 
   useEffect(() => {
-    setLoading(true);
-    fetchUsers();
-    fetchFriends();
-    setLoading(false);
-  }, []);
+    if (users.length && search.length) {
+      setLoading(true);
+      fetchUsersAndFriends();
+      setSearchUsers(
+        users.filter(
+          (thisUser) =>
+            thisUser.email !== user?.email &&
+            (thisUser.firstName.toLowerCase().includes(search.toLowerCase()) ||
+              thisUser.lastName.toLowerCase().includes(search.toLowerCase())),
+        ),
+      );
+      setLoading(false);
+    }
+  }, [search, user]);
 
   useEffect(() => {
-    setLoading(true);
-    fetchFriends();
-    setSearchUsers(
-      users.filter(
-        (thisUser) =>
-          !user?.friendEmails?.includes(user.email) &&
-          (thisUser.firstName.toLowerCase().includes(search.toLowerCase()) ||
-            thisUser.lastName.toLowerCase().includes(search.toLowerCase())),
-      ),
-    );
-    setLoading(false);
-  }, [search, user]);
+    fetchUsersAndFriends();
+  }, []);
 
   return (
     <ScrollableLayout>
@@ -93,7 +94,7 @@ const SocialScreen = () => {
             <UserListItem
               key={user.email}
               foundUser={user}
-              lastItem={i === users.length - 1}
+              lastItem={i === searchUsers.length - 1}
             />
           ))}
         </View>
