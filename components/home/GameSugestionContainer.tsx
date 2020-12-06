@@ -47,9 +47,8 @@ const GameSuggestionContainer = () => {
   };
   React.useEffect(() => {
     async function getGameSuggestion() {
-      await Promise.all(rec.map((game) => getGameDetails(game.appid)));
+      await rec.map((game) => getGameDetails(game.appid));
     }
-
     getGameSuggestion();
   }, []);
 
