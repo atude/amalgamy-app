@@ -75,3 +75,11 @@ export type SubMenu = {
   title: string;
   optionList: Array<Option>;
 };
+
+export type Message = {
+  id: string;
+  timestamp: number;
+  senderEmail: string;
+  receiverEmail: string;
+  message: string;
+};

@@ -1,0 +1,4 @@
+- `yarn`
+- copy `config/firebase.config.example.ts` `to config/firebase.config.ts`
+- set keys
+- `yarn ios` or `yarn android`
