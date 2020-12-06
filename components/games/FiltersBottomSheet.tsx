@@ -173,7 +173,6 @@ const styles = StyleSheet.create({
   categoryValuesContainer: {
     padding: 14,
     flex: 0,
-    height: 35,
     overflow: "visible",
   },
   contentContainer: {
