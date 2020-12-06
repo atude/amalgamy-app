@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 // import { ExtractedGameData } from "../../screens/GamesHome";
 
 const GameSuggestionContainer = () => {
+  const navigation = useNavigation();
   const [games, setGames] = useState([]);
   async function getGameDetails(appId: number) {
     const response = await axios.get(
