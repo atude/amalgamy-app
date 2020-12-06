@@ -13,6 +13,7 @@ import { createAccount, signInEmail } from "../functions/auth";
 import Colors from "../constants/Colors";
 import Loading from "../components/shared/Loading";
 import GlobalStyles from "../constants/GlobalStyles";
+import { getUser } from "../functions/users";
 
 const LoginScreen = () => {
   const { user, setUser } = useContext(AppContext);
@@ -63,10 +64,16 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    Firebase.auth().onAuthStateChanged((firebaseUser) => {
+    Firebase.auth().onAuthStateChanged(async (firebaseUser) => {
       if (firebaseUser && firebaseUser.email) {
         setUser(firebaseUserToUser(firebaseUser));
-        console.log("Auth state changed => " + firebaseUser.email);
+        const userDoc = await getUser(firebaseUser.email);
+        if (userDoc) {
+          setUser(userDoc);
+          console.log("Auth state changed => " + firebaseUser.email);
+        } else {
+          console.log("User document could not be found");
+        }
       } else {
         setUser(undefined);
       }

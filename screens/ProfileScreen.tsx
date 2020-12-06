@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { ProfileAvatar } from "../components/profile/ProfileAvatar";
 import { BigButton, Layout, Text, View } from "../components/Themed";
 import { StyleSheet } from "react-native";
 import { ProfileMenuWrapper } from "../components/profile/ProfileMenuWrapper";
 import { Option } from "../types/index";
 import { signOut } from "../functions/auth";
+import { AppContext } from "../context";
 
 const DUMMY_PROFILE = {
   firstName: "Mozamel",
@@ -36,12 +37,13 @@ const OPTIONS: Option[] = [
 ];
 
 export default function ProfileHome() {
+  const { user } = useContext(AppContext);
   return (
     <Layout style={styles.container}>
       <ProfileAvatar
-        firstName={DUMMY_PROFILE.firstName}
-        lastName={DUMMY_PROFILE.lastName}
-        avatar={DUMMY_PROFILE.avatar}
+        firstName={user?.firstName ?? ""}
+        lastName={user?.lastName ?? ""}
+        avatar={user?.avatar ?? ""}
       />
       <ProfileMenuWrapper options={OPTIONS} />
       <BigButton text="Logout" onPress={signOut} />
