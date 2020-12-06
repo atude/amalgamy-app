@@ -3,6 +3,7 @@ import { ScrollableLayout } from "../../../components/Themed";
 import { Game } from "../../../types";
 import GameListItem from "../../../components/games/GameListItem";
 import { AppContext } from "../../../context";
+import { ScrollView } from "react-native";
 
 type ExtractedGameData = {
   name: string;
@@ -51,7 +52,7 @@ export default function savedGamesScreen() {
   }, [user]);
 
   return (
-    <ScrollableLayout>
+    <ScrollView>
       {gameArray.map((game: any, index) => (
         <GameListItem
           key={index}
@@ -66,6 +67,6 @@ export default function savedGamesScreen() {
           rating={game.metacritic}
         />
       ))}
-    </ScrollableLayout>
+    </ScrollView>
   );
 }
