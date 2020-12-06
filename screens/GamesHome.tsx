@@ -13,6 +13,7 @@ import FiltersBottomSheet from "../components/games/FiltersBottomSheet";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { OperatingSystem, Genre, Language } from "../types/index";
 import FilterModalHeader from "../components/games/FilterModalHeader";
+import GenreMenu from "../components/games/FilterMenus/GenreMenu";
 type ExtractedGameData = {
   name: string;
   platforms: Record<string, unknown>;
@@ -33,10 +34,11 @@ type GamesHomeState = {
   selectedIndex: number;
   modalVisible: boolean;
   platforms: OperatingSystem[];
-  genres: Genre[];
+  genres: string[];
   languages: Language[];
   priceMin: 0;
   priceMax: 1000;
+  menuItem: string;
 };
 
 export default class GamesHome extends React.Component<
@@ -57,6 +59,7 @@ export default class GamesHome extends React.Component<
       languages: [],
       priceMin: 0,
       priceMax: 1000,
+      menuItem: "filters",
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -214,9 +217,31 @@ export default class GamesHome extends React.Component<
       }),
     }));
   }
+  addGenreFilter(genre: Genre) {
+    this.setState(
+      ({ genres }) => ({
+        genres: [...genres, genre],
+      }),
+      () => {
+        console.log(`added genre: ${genre}`);
+      },
+    );
+  }
+  removeGenreFilter(genre: OperatingSystem) {
+    this.setState(({ genres }) => ({
+      genres: genres.filter((val) => {
+        return val != genre;
+      }),
+    }));
+  }
   componentDidMount() {
     this.getFeaturedGames();
     this.getAllGames();
+  }
+  setMenu(menu: string) {
+    this.setState({
+      menuItem: menu,
+    });
   }
   render() {
     const buttons = ["Recommended", "Top Selling", "Featured"];
@@ -242,15 +267,30 @@ export default class GamesHome extends React.Component<
             },
           }}
         >
-          <FilterModalHeader />
+          <FilterModalHeader 
+            setMenu={this.setMenu.bind(this)}
+            menu={this.state.menuItem}
+          />
           <View
             style={{ backgroundColor: "white", height: layout.window.height }}
           >
-            <FiltersBottomSheet
-              removePlatform={this.removePlatformFilter.bind(this)}
-              addPlatform={this.addPlatformFilter.bind(this)}
-              genreFilters={this.state.genres}
-            />
+            {this.state.menuItem === "genres" ? (
+              <GenreMenu
+                genreFilters={this.state.genres}
+                removeGenre={this.removeGenreFilter.bind(this)}
+                addGenre={this.addGenreFilter.bind(this)}
+              />
+            ) : (
+              <FiltersBottomSheet
+                removePlatform={this.removePlatformFilter.bind(this)}
+                addPlatform={this.addPlatformFilter.bind(this)}
+                genreFilters={this.state.genres}
+                removeGenre={this.removeGenreFilter.bind(this)}
+                addGenre={this.addGenreFilter.bind(this)}
+                platformFilters={this.state.platforms}
+                openMenu={this.setMenu.bind(this)}
+              />
+            )}
           </View>
         </RBSheet>
         <View style={styles.tabButtonsContainer}>

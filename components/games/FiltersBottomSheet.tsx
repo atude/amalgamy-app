@@ -9,15 +9,20 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { ListItem } from "react-native-elements";
-import { OperatingSystem, Genre, Language } from "../types/index";
+import { OperatingSystem, Genre, Language } from "../../types/index";
 import CategoryValueButton from "./CategoryValueButton";
 import layout from "../../constants/ScreenLayout";
-import CategoryValueContainer from "./CategoryValueContainer";
+import { genresList } from "../../constants/FilterValues";
 type Props = {
   removePlatform(value: OperatingSystem): void;
   addPlatform(value: OperatingSystem): void;
-  genreFilters: Genre[];
+  genreFilters: string[];
+  addGenre(value: string): void;
+  removeGenre(value: string): void;
+  platformFilters: OperatingSystem[];
+  openMenu(value: string): void;
 };
+
 const FiltersBottomSheet = (props: Props) => {
   return (
     <View style={styles.container}>
@@ -30,77 +35,64 @@ const FiltersBottomSheet = (props: Props) => {
       <ScrollView
         style={styles.categoryValuesContainer}
         contentContainerStyle={styles.contentContainer}
-        horizontal>
+        horizontal
+      >
         <CategoryValueButton
           add={props.addPlatform}
           remove={props.removePlatform}
           icon="windows"
           title="Windows"
+          parentFilters={props.platformFilters}
         />
         <CategoryValueButton
           add={props.addPlatform}
           remove={props.removePlatform}
           icon="apple"
           title="Mac OS X"
+          parentFilters={props.platformFilters}
         />
         <CategoryValueButton
           add={props.addPlatform}
           remove={props.removePlatform}
           icon="linux"
           title="Linux"
+          parentFilters={props.platformFilters}
         />
       </ScrollView>
-      <ListItem Component={TouchableOpacity}>
+      <ListItem
+        Component={TouchableOpacity}
+        onPress={() => props.openMenu("genres")}
+      >
         <Entypo name="open-book" size={24} color="black" />
         <ListItem.Content>
           <ListItem.Title style={styles.titleStyle}>Genres</ListItem.Title>
         </ListItem.Content>
-        {props.genreFilters.length === 0 ? null : (
+        {props.genreFilters.length === 0 ? null : props.genreFilters.length <=
+          3 ? (
           <ListItem.Subtitle style={styles.subtitle}>
-            {props.genreFilters.join(" ")}
+            {props.genreFilters.join(", ")}
           </ListItem.Subtitle>
+        ) : (
+          <ListItem.Subtitle>({props.genreFilters.length})</ListItem.Subtitle>
         )}
         <ListItem.Chevron />
       </ListItem>
       <ScrollView
         style={styles.categoryValuesContainer}
         contentContainerStyle={styles.contentContainer}
-        horizontal>
-          <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="Action"
-        />
-        <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="Casual"
-        />
-        <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="RPG"
-        />
-        <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="Strategy"
-        />
-        <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="Adventure"
-        />
-        <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="Simulation"
-        />
-        <CategoryValueButton
-          add={props.addPlatform}
-          remove={props.removePlatform}
-          title="Sports"
-        />
+        horizontal
+      >
+        {genresList.map((genreName, i) => {
+          return (
+            <CategoryValueButton
+              key={i}
+              add={props.addGenre}
+              remove={props.removeGenre}
+              title={genreName}
+              parentFilters={props.genreFilters}
+            />
+          );
+        })}
       </ScrollView>
       <ListItem Component={TouchableOpacity}>
         <Entypo name="price-tag" size={24} color="black" />
@@ -140,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   categoryValuesContainer: {
-    padding:14,
+    padding: 14,
     flex: 0,
     height: 35,
     overflow: "visible",
@@ -152,7 +144,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 0,
-    padding:10,
+    padding: 10,
     flexDirection: "column",
     width: layout.window.width,
   },

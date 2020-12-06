@@ -13,7 +13,7 @@ type Props = {
   add(value: string): void;
   parentFilters: string[];
 };
-export default function CategoryValueButton(props: Props) {
+export default function CategoryValueCheckbox(props: Props) {
   const [selected, setSelected] = useState(false);
   const handleSelect = (): void => {
     if (selected) {
