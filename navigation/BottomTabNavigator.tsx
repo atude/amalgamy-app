@@ -29,6 +29,8 @@ import { AppContext } from "../context";
 import ChangeEmailScreen from "../screens/profile/AccountScreens/ChangeEmailScreen";
 import DevicesScreen from "../screens/profile/AccountScreens/DevicesScreen";
 import AccessibilityScreen from "../screens/profile/AccountScreens/AccessibilityScreen";
+import GenreScreen from "../screens/profile/AccountScreens/GenreScreen";
+import LanguagesScreen from "../screens/profile/AccountScreens/LanguagesScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -190,7 +192,27 @@ function ProfileNavigator() {
         name="AccessibilityScreen"
         component={AccessibilityScreen}
         options={{
-          headerTitle: "Accessibility Options",
+          headerTitle: "Accessibility Preferences",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="GenreScreen"
+        component={GenreScreen}
+        options={{
+          headerTitle: "Genre Preferences",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="LanguagesScreen"
+        component={LanguagesScreen}
+        options={{
+          headerTitle: "Language Support Preferences",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,

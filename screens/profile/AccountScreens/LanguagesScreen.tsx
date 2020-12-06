@@ -15,7 +15,7 @@ import { ProfileMenuWrapper } from "../../../components/profile/ProfileMenuWrapp
 import ProfileMenuSet from "../../../components/profile/ProfileMenuSet";
 import MenuItemWithCheck from "../../../components/profile/MenuItemWithCheck";
 
-const GenreOptions: Array<Option> = [
+const Languages: Array<Option> = [
   {
     optionText: "Strategy",
     checkbox: true,
@@ -46,10 +46,10 @@ const GenreOptions: Array<Option> = [
   },
 ];
 
-export default function GenreScreen() {
+export default function LanguagesScreen() {
   return (
     <Layout>
-      <ProfileMenuWrapper options={GenreOptions} />
+      <ProfileMenuWrapper options={Languages} />
     </Layout>
   );
 }
