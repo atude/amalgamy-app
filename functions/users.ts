@@ -34,3 +34,9 @@ export const removeFriend = async (
     friendEmails: firebase.firestore.FieldValue.arrayRemove(friendEmail),
   });
 };
+
+export const addBookmark = async (gameID: number): Promise<void> => {
+  await usersRef.doc(userEmail).update({
+    bookmarks: firebase.firestore.FieldValue.arrayUnion(friendEmail),
+  });
+};
