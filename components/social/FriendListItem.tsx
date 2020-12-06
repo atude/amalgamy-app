@@ -5,7 +5,7 @@ import { Text, View } from "../Themed";
 import { ColorScheme, User } from "../../types";
 import Colors from "../../constants/Colors";
 import { Avatar } from "react-native-elements";
-import { Entypo } from "@expo/vector-icons";
+// import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { AppContext } from "../../context";
 
@@ -49,16 +49,16 @@ const FriendListItem = (props: Props) => {
             {friend.firstName} {friend.lastName}
           </Text>
           <View style={styles.detailsTopRight}>
-            <Entypo
+            {/* <Entypo
               name="notification"
               size={16}
               style={styles.unreadIcon}
               color={Colors[colorScheme].red}
-            />
-            <Text>x/x</Text>
+            /> */}
+            <Text>1/2</Text>
           </View>
         </View>
-        <Text style={styles.playingNow}>Playing some game</Text>
+        <Text style={styles.playingNow}>Playing Among Us</Text>
         <Text style={styles.playingNow}>Looking for a player</Text>
       </View>
     </TouchableOpacity>
