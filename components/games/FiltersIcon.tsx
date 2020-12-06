@@ -3,9 +3,12 @@ import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "../../constants/Colors";
 
-export default function FiltersIcon() {
+type Props = {
+    onPress(): void;
+}
+export default function FiltersIcon(props: Props) {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <Feather name="filter" size={16} color="white" />
     </TouchableOpacity>
   );
