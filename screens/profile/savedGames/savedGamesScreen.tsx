@@ -3,6 +3,7 @@ import { ScrollableLayout } from "../../../components/Themed";
 import { Game } from "../../../types";
 import GameListItem from "../../../components/games/GameListItem";
 import { AppContext } from "../../../context";
+import { ScrollView } from "react-native";
 
 type ExtractedGameData = {
   name: string;
@@ -22,9 +23,10 @@ export default function savedGamesScreen() {
 
   const getGameDetails = async () => {
     if (user) {
+      const currGames = [];
       for (const gameId of user?.bookmarks) {
         const res = await fetch(
-          `http://store.steampowered.com/api/appdetails?appids=${gameId}&cc=au&l=en`
+          `http://store.steampowered.com/api/appdetails?appids=${gameId}&cc=au&l=en`,
         );
         const data = await res.json();
         const gameData = data[gameId]?.data ?? undefined;
@@ -40,9 +42,10 @@ export default function savedGamesScreen() {
             screenshots: gameData.screenshots,
             metacritic: gameData.metacritic,
           };
-          setGameArray((arr) => [...arr, game]);
+          currGames.push(game);
         }
       }
+      setGameArray(currGames);
     }
   };
 
@@ -51,7 +54,7 @@ export default function savedGamesScreen() {
   }, [user]);
 
   return (
-    <ScrollableLayout>
+    <ScrollView>
       {gameArray.map((game: any, index) => (
         <GameListItem
           key={index}
@@ -66,6 +69,6 @@ export default function savedGamesScreen() {
           rating={game.metacritic}
         />
       ))}
-    </ScrollableLayout>
+    </ScrollView>
   );
 }
