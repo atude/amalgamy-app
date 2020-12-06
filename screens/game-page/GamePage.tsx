@@ -2,9 +2,9 @@ import * as React from "react";
 import {
   StyleSheet,
   Image,
+  Share,
   TouchableOpacity,
   ScrollView,
-  Platform,
 } from "react-native";
 import axios from "axios";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
@@ -14,12 +14,12 @@ import Colors from "../../constants/Colors";
 import { processGenres } from "../../components/games/GameListItem";
 import GameSuggestionContainer from "../../components/home/GameSugestionContainer";
 import pickAccFeatures from "./AccessibilityFeatures";
-
+let gameName: string;
 export default function GamePage({ route, navigation }) {
   const colorScheme = useColorScheme();
 
   const gameInfo = route.params;
-
+  gameName = gameInfo.name;
   return (
     <ScrollableLayout style={styles.scrollContainer}>
       <View
@@ -72,7 +72,7 @@ export default function GamePage({ route, navigation }) {
             </FontAwesome>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={shareGame}>
+          <TouchableOpacity onPress={shareGame.bind(gameInfo.name)}>
             <Ionicons
               name="ios-share"
               style={{ color: Colors[colorScheme].primary, marginTop: 16 }}
@@ -219,10 +219,25 @@ function platformIcon(platform: string) {
 function bookmarkGame() {
   return;
 }
-function shareGame() {
-  return;
-}
-
+const shareGame = async () => {
+  try {
+    const result = await Share.share({
+      message: gameName
+        ? `Check out ${gameName} on Amalgamy!`
+        : "Come join me on Amalgamy",
+      title: "Share Game",
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+      } else {
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
 function generatePlayers() {
   let min = Math.ceil(1);
   let max = Math.floor(4);
