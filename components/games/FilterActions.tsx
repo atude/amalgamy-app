@@ -34,7 +34,7 @@ export default function FilterActions(props: Props) {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: layout.window.height - 612,
+    bottom: layout.window.height - 618,
     width: layout.window.width,
     flexDirection: "row",
   },
