@@ -20,9 +20,8 @@ type ExtractedGameData = {
   about_the_game: string;
   description: string;
   developers: Array<string>;
-  platforms: Array<string>;
-  media: Array<string>;
-  rating: Array<String>;
+  screenshots: Record<string, unknown>;
+  metacritic: Array<string>;
 };
 
 type GamesHomeProps = Record<string, unknown>;

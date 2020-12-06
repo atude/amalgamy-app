@@ -186,7 +186,10 @@ function GamesNavigator() {
         name="GamePage"
         component={GamePage}
         options={{
-          headerShown: false,
+          headerTitle: "",
+          // headerTitleAlign: "left",
+          // headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
         }}
       />
     </GamesStack.Navigator>
@@ -202,6 +205,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: 120,
   },
+
   // bottomNav: {
   //   height: 68,
   // },

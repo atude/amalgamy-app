@@ -6,7 +6,6 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { Game } from "../../types/index";
 import axios from "axios";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Text, View, ScrollableLayout } from "../../components/Themed";
@@ -14,6 +13,7 @@ import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import { processGenres } from "../../components/games/GameListItem";
 import GameSuggestionContainer from "../../components/home/GameSugestionContainer";
+import pickAccFeatures from "./AccessibilityFeatures";
 
 export default function GamePage({ route, navigation }) {
   const colorScheme = useColorScheme();
@@ -25,22 +25,25 @@ export default function GamePage({ route, navigation }) {
       <View
         style={[
           styles.rowContainer,
-          { justifyContent: "space-between", marginBottom: 32, marginTop: 64 },
+          { justifyContent: "space-between", marginBottom: 32 },
         ]}
       >
         <View style={styles.rowContainer}>
           <Image
             style={styles.icon}
+            accessibilityLabel={`${gameInfo.name}-game-icon`}
             source={{
               uri: gameInfo.icon,
             }}
           />
           <View style={[styles.gameDetails]}>
-            <Text style={[styles.h1, styles.gameName]}>{gameInfo.name}</Text>
+            <Text style={[styles.h1, styles.constrainHeader]}>
+              {gameInfo.name}
+            </Text>
             <Text
               style={[
                 styles.p,
-                styles.gameName,
+                styles.constrainHeader,
                 { color: Colors[colorScheme].header },
               ]}
             >
@@ -49,6 +52,7 @@ export default function GamePage({ route, navigation }) {
             <Text
               style={[
                 styles.p,
+                styles.constrainHeader,
                 { fontStyle: "italic", color: Colors[colorScheme].header },
               ]}
             >
@@ -105,9 +109,10 @@ export default function GamePage({ route, navigation }) {
         contentContainerStyle={[styles.rowContainer, { marginBottom: 32 }]}
       >
         {gameInfo.media ? (
-          processMedia(gameInfo.media).map((link) => (
+          processMedia(gameInfo.media).map((link: string, index: number) => (
             <Image
               style={styles.media}
+              accessibilityLabel={`${gameInfo.name}-screenshot-${index}`}
               key={link}
               source={{
                 uri: link,
@@ -141,15 +146,24 @@ export default function GamePage({ route, navigation }) {
           <></>
         )}
       </View>
-
+      <Text style={styles.h2}>Accessbility Features</Text>
+      <View style={{ marginBottom: 24 }}>
+        {pickAccFeatures().map((feature: string) => {
+          return (
+            <Text key={feature} style={styles.p}>
+              {feature}
+            </Text>
+          );
+        })}
+      </View>
       <Text style={[styles.h2, { marginBottom: 12 }]}>You May Like</Text>
       <GameSuggestionContainer></GameSuggestionContainer>
-      <View style={{ marginBottom: 20 }}></View>
+      {/* <View style={{ marginBottom: 20 }}></View> */}
     </ScrollableLayout>
   );
 }
 
-function extractDescription(desc) {
+function extractDescription(desc: string) {
   // reference: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript
   desc = desc.replace(/<br>/gm, "\n");
   // desc = desc.replace(/<\/h2>/gm, "\n");
@@ -168,8 +182,8 @@ function processMedia(media) {
   });
   return processed;
 }
-function processPlatforms(platforms) {
-  let buttons = [];
+function processPlatforms(platforms: Record<string, unknown>) {
+  const buttons = [];
   if (platforms.windows) {
     buttons.push("Windows");
   }
@@ -181,7 +195,7 @@ function processPlatforms(platforms) {
   }
   return buttons;
 }
-function platformIcon(platform) {
+function platformIcon(platform: string) {
   let icon;
   if (platform == "Mac") {
     icon = (
@@ -223,7 +237,6 @@ function generatePlayers() {
 const styles = StyleSheet.create({
   button: {},
   scrollContainer: {
-    // paddingTop: 64,
     overflow: "visible",
   },
   title: {
@@ -256,7 +269,7 @@ const styles = StyleSheet.create({
 
     marginBottom: 4,
   },
-  gameName: {
+  constrainHeader: {
     maxWidth: 190,
   },
   h2: {
