@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import GlobalStyles from "../../constants/GlobalStyles";
 import { Text, View } from "../Themed";
@@ -7,6 +7,7 @@ import Colors from "../../constants/Colors";
 import { Avatar } from "react-native-elements";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { AppContext } from "../../context";
 
 type Props = {
   friend: User;
@@ -16,8 +17,18 @@ type Props = {
 const FriendListItem = (props: Props) => {
   const colorScheme: ColorScheme = useColorScheme() ?? "light";
   const navigation = useNavigation();
+  const { setChatReceiver } = useContext(AppContext);
   const styles = createStyles(colorScheme);
   const { friend, lastItem } = props;
+
+  const handleClickChat = () => {
+    setChatReceiver({
+      email: friend.email,
+      firstName: friend.firstName,
+      lastName: friend.lastName,
+    });
+    navigation.navigate("ChatScreen");
+  };
 
   return (
     <TouchableOpacity
@@ -26,7 +37,7 @@ const FriendListItem = (props: Props) => {
           ? [styles.container, styles.containerLastItem]
           : styles.container
       }
-      onPress={() => navigation.navigate("ChatScreen")}
+      onPress={() => handleClickChat()}
     >
       <Avatar
         title={`${friend.firstName[0]}${friend.lastName[0]}`}

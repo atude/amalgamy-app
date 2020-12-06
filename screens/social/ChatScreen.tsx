@@ -24,7 +24,6 @@ const ChatScreen = () => {
         {messages.map((message) => {
           // TODO: put actual email check here
           if (message.senderEmail === "f@f.com") {
-            console.log("yes")
             return <MessageItem key={message.id} isSender message={message} />;
           }
           return <MessageItem key={message.id} message={message} />;
