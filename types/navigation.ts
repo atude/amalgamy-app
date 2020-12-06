@@ -16,6 +16,7 @@ export type HomeParamList = {
 
 export type GamesHomeParamList = {
   GamesHome: undefined;
+  GamePage: undefined;
 };
 
 export type SocialParamList = {
@@ -26,4 +27,5 @@ export type SocialParamList = {
 export type ProfileParamList = {
   ProfileScreen: undefined;
   AccountScreen: undefined;
+  ChangeEmailScreen: undefined;
 };

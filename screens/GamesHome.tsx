@@ -22,6 +22,12 @@ type ExtractedGameData = {
   header_image: string;
   genres: Record<string, unknown>[];
   steam_appid: number;
+  about_the_game: string;
+  description: string;
+  developers: Array<string>;
+  platforms: Array<string>;
+  media: Array<string>;
+  rating: Array<String>;
 };
 
 type GamesHomeProps = {
@@ -143,6 +149,11 @@ export default class GamesHome extends React.Component<
           gameName={game.name}
           gameImage={game.small_capsule_image}
           genres={game.genres}
+          description={game.description}
+          publishers={game.developers}
+          platforms={game.platforms}
+          media={game.screenshots}
+          rating={game.metacritic}
         />
       );
     });
@@ -158,6 +169,11 @@ export default class GamesHome extends React.Component<
           gameName={`${index + 1}. ${game.name}`}
           gameImage={game.small_capsule_image}
           genres={game.genres}
+          description={game.description}
+          publishers={game.developers}
+          platforms={game.platforms}
+          media={game.screenshots}
+          rating={game.metacritic}
         />
       );
     });
@@ -166,6 +182,7 @@ export default class GamesHome extends React.Component<
     return this.state.allGames.map((game: any, index) => {
       // let [appId, res] = game;
       // let data = res[appId].data;
+      // console.log(game);
       if (game.name === "failed") {
         return <Text key={index}>{game.name}</Text>;
       }
@@ -177,6 +194,11 @@ export default class GamesHome extends React.Component<
           gameName={game.name}
           gameImage={game.header_image}
           genres={game.genres}
+          description={game.description}
+          publishers={game.publishers}
+          platforms={game.platforms}
+          media={game.media}
+          rating={game.rating}
         />
       );
     });
@@ -191,6 +213,14 @@ export default class GamesHome extends React.Component<
     const id = Object.keys(resultData)[0];
     if (hasKey(resultData, id.toString())) {
       const data = resultData[id.toString()].data;
+      // console.log(data.screenshots);
+      // console.log(data.developers);
+      // console.log(data.metacritic);
+      // console.log(data);
+
+      if (typeof data === "undefined") {
+        return { name: "failed" };
+      }
 
       return {
         name: data.name,
@@ -198,6 +228,10 @@ export default class GamesHome extends React.Component<
         header_image: data["header_image"],
         genres: data.genres || [],
         steam_appid: data.steam_appid,
+        description: data.about_the_game,
+        publishers: data.developers,
+        media: data.screenshots,
+        rating: data.metacritic,
       };
     }
     return { name: "failed" };

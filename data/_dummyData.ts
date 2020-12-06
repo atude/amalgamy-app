@@ -1,4 +1,4 @@
-import { Game, User } from "../types";
+import { Game, Message, User } from "../types";
 
 export const DUMMY_GAMES: Game[] = [
   {

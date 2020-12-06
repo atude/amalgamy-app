@@ -7,45 +7,30 @@ import { Option } from "../../types/index";
 import { Ionicons } from "@expo/vector-icons";
 import GlobalStyles from "../../constants/GlobalStyles";
 import { CheckBox } from "react-native-elements";
-import { useState } from "react";
 
 type Props = {
-  option: Option;
+  optionText: string;
+  checked: boolean;
 };
 
-const ProfileMenuItem = (props: Props) => {
-  const { optionText, pageLink, icon, valueText, checkbox } = props.option;
+const MenuItemWithCheck = (props: Props) => {
+  const { optionText, checked } = props;
   const navigation = useNavigation();
-  const [checked, setChecked] = useState(false);
-
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(pageLink)}>
-      <View style={checkbox ? styles.checkContainer : styles.container}>
+    <TouchableOpacity>
+      <View style={styles.container}>
         <Text style={[styles.optionText, GlobalStyles.styles.paragraphText]}>
           {optionText}
         </Text>
-
-        {icon && (
-          <View style={styles.iconContainer}>
-            <Ionicons name={icon} size={20} color="black" />
-          </View>
-        )}
-
-        {valueText && (
-          <Text style={[styles.valueText, GlobalStyles.styles.paragraphText]}>
-            {valueText}
-          </Text>
-        )}
-
-        {checkbox && (
-          <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
-        )}
+        <View style={styles.iconContainer}>
+          <CheckBox checked={false} />
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default ProfileMenuItem;
+export default MenuItemWithCheck;
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   optionText: {
-    alignSelf: "center",
+    alignSelf: "flex-start",
   },
   valueText: {
     alignSelf: "flex-start",
@@ -65,12 +50,5 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignSelf: "center",
     alignItems: "flex-end",
-  },
-  checkContainer: {
-    borderBottomWidth: 1,
-    borderColor: Colors.light.lightgrey3,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 12,
   },
 });

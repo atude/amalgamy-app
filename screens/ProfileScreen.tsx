@@ -1,9 +1,10 @@
 import * as React from "react";
 import { ProfileAvatar } from "../components/profile/ProfileAvatar";
-import { Layout, Text, View } from "../components/Themed";
+import { BigButton, Layout, Text, View } from "../components/Themed";
 import { StyleSheet } from "react-native";
 import { ProfileMenuWrapper } from "../components/profile/ProfileMenuWrapper";
 import { Option } from "../types/index";
+import { signOut } from "../functions/auth";
 
 const DUMMY_PROFILE = {
   firstName: "Mozamel",
@@ -15,22 +16,22 @@ const OPTIONS: Option[] = [
   {
     optionText: "Account",
     pageLink: "AccountScreen",
-    icon: "md-settings"
+    icon: "md-settings",
   },
   {
     optionText: "Connected Services",
     pageLink: "Services",
-    icon: "md-git-branch"
+    icon: "md-git-branch",
   },
   {
     optionText: "Saved Games",
     pageLink: "SavedGames",
-    icon: "md-bookmarks"
+    icon: "md-bookmarks",
   },
   {
     optionText: "Reviews",
     pageLink: "Reviews",
-    icon: "md-star"
+    icon: "md-star",
   },
 ];
 
@@ -43,6 +44,7 @@ export default function ProfileHome() {
         avatar={DUMMY_PROFILE.avatar}
       />
       <ProfileMenuWrapper options={OPTIONS} />
+      <BigButton text="Logout" onPress={signOut} />
     </Layout>
   );
 }

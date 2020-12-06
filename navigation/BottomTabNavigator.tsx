@@ -5,7 +5,7 @@ import {
   TransitionPresets,
   TransitionSpecs,
 } from "@react-navigation/stack";
-import * as React from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 
 import Colors from "../constants/Colors";
@@ -24,6 +24,11 @@ import {
 } from "../types/navigation";
 import SocialScreen from "../screens/SocialScreen";
 import ChatScreen from "../screens/social/ChatScreen";
+import GamePage from "../screens/game-page/GamePage";
+import { AppContext } from "../context";
+import ChangeEmailScreen from "../screens/profile/AccountScreens/ChangeEmailScreen";
+import DevicesScreen from "../screens/profile/AccountScreens/DevicesScreen";
+import AccessibilityScreen from "../screens/profile/AccountScreens/AccessibilityScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -34,6 +39,7 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].primary }}
+      // style={styles.bottomNav}
     >
       <BottomTab.Screen
         name="Home"
@@ -105,13 +111,15 @@ function HomeNavigator() {
 const SocialStack = createStackNavigator<SocialParamList>();
 
 function SocialNavigator() {
+  const { currChatReceiver } = useContext(AppContext);
+
   return (
     <SocialStack.Navigator>
       <SocialStack.Screen
         name="SocialScreen"
         component={SocialScreen}
         options={{
-          headerTitle: "Friends & Groups",
+          headerTitle: "Social",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
@@ -121,7 +129,9 @@ function SocialNavigator() {
         name="ChatScreen"
         component={ChatScreen}
         options={{
-          headerTitle: "Friends & Groups",
+          headerTitle: currChatReceiver
+            ? `${currChatReceiver?.firstName} ${currChatReceiver?.lastName}`
+            : "Social",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
@@ -154,7 +164,36 @@ function ProfileNavigator() {
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,
-          ...TransitionPresets.ModalTransition,
+        }}
+      />
+      <ProfileStack.Screen
+        name="ChangeEmailScreen"
+        component={ChangeEmailScreen}
+        options={{
+          headerTitle: "Change Email",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="DevicesScreen"
+        component={DevicesScreen}
+        options={{
+          headerTitle: "Operating Systems and Devices",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
+        }}
+      />
+      <ProfileStack.Screen
+        name="AccessibilityScreen"
+        component={AccessibilityScreen}
+        options={{
+          headerTitle: "Accessibility Options",
+          headerTitleAlign: "left",
+          headerTitleStyle: styles.headerText,
+          headerStyle: styles.headerContainer,
         }}
       />
     </ProfileStack.Navigator>
@@ -176,6 +215,13 @@ function GamesNavigator() {
           headerStyle: styles.headerContainer,
         }}
       />
+      <GamesStack.Screen
+        name="GamePage"
+        component={GamePage}
+        options={{
+          headerShown: false,
+        }}
+      />
     </GamesStack.Navigator>
   );
 }
@@ -189,4 +235,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     height: 120,
   },
+  // bottomNav: {
+  //   height: 68,
+  // },
 });
