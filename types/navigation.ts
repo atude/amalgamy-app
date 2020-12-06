@@ -16,6 +16,7 @@ export type HomeParamList = {
 
 export type GamesHomeParamList = {
   GamesHome: undefined;
+  GamePage: undefined;
 };
 
 export type SocialParamList = {

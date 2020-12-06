@@ -2,6 +2,8 @@ import { Entypo } from "@expo/vector-icons";
 import * as React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../constants/GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
+
 import { Text, View } from "../Themed";
 import layout from "../../constants/ScreenLayout";
 
@@ -17,7 +19,7 @@ type GameGenre = {
   id: string;
 };
 
-function processGenres(genres: GameGenre[]): string {
+export function processGenres(genres: GameGenre[]): string {
   let string = "";
   genres.forEach((genre) => {
     string += `${genre.description}, `;
@@ -25,9 +27,35 @@ function processGenres(genres: GameGenre[]): string {
   return string.slice(0, -2);
 }
 const GameListItem = (props: Props) => {
-  const { gameId, gameName, gameImage, genres } = props;
+  const {
+    gameId,
+    gameName,
+    gameImage,
+    genres,
+    description,
+    media,
+    rating,
+    publishers,
+    platforms,
+  } = props;
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("GamePage", {
+          gameId: gameId,
+          name: gameName,
+          icon: gameImage,
+          genres: genres,
+          description: description,
+          media: media,
+          rating: rating,
+          publishers: publishers,
+          platforms: platforms,
+        })
+      }
+    >
       <View style={styles.container}>
         <Image
           style={styles.gameImage}
