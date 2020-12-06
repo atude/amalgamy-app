@@ -5,19 +5,10 @@ import GlobalStyles, { styles } from "../../../constants/GlobalStyles";
 import { BigButton, Layout, Text } from "../../../components/Themed";
 import { User } from "../../../types";
 import { DUMMY_FRIENDS } from "../../../data/_dummyData";
+import { AppContext } from "../../../context";
 
-type Props = {
-  user: User;
-};
-
-export default function ChangeEmailScreen(props: Props) {
-  //const { user } = props;
-  const user = {
-    email: "bobjeremy@email.com",
-    firstName: "Bob",
-    lastName: "Jeremy",
-    avatar: "yes",
-  };
+export default function ChangeEmailScreen() {
+  const { user } = React.useContext(AppContext);
   return (
     <Layout>
       <Text style={GlobalStyles.styles.paragraphText}>Change your email</Text>
