@@ -5,9 +5,10 @@ import { ScrollView, StyleSheet } from "react-native";
 import { Button, Text, View } from "../Themed";
 import GameSuggestion from "./GameSuggestion";
 import { rec } from "../../data/gameIds";
-
 import axios from "axios";
 import { hasKey } from "../../utils/index";
+import { useNavigation } from "@react-navigation/native";
+
 // import { ExtractedGameData } from "../../screens/GamesHome";
 
 const GameSuggestionContainer = () => {

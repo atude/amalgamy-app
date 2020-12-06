@@ -67,8 +67,9 @@ export const DUMMY_FRIENDS: User[] = [
 export const DUMMY_FRIEND_ACTIVITY = [
   {
     gameId: "jsnadf",
-    gameName: "ijuasdf msf",
-    gameImage: "sda msf",
+    gameName: "Valorant",
+    gameImage:
+      "https://pbs.twimg.com/profile_images/1291867974790295552/AFRVxzDT_400x400.jpg",
     friends: [
       {
         id: "yes",
@@ -86,7 +87,10 @@ export const DUMMY_FRIEND_ACTIVITY = [
   },
   {
     gameId: "jsnasaddf",
-    gameName: "Yes this is a game",
+    gameName: "Fortnite",
+    gameImage:
+      "https://www.mobygames.com/images/covers/l/561802-fortnite-battle-royale-nintendo-switch-front-cover.jpg",
+
     friends: [
       {
         id: "yes",
@@ -116,7 +120,8 @@ export const DUMMY_FRIEND_ACTIVITY = [
   },
   {
     gameId: "jsnaasddf",
-    gameName: "No friends game",
+    gameName: "Minecraft",
+    gameImage: "https://cdn.moble.com/w/89/162101/file/image14.png",
     friends: [
       {
         id: "yes4",
@@ -140,7 +145,9 @@ export const DUMMY_FRIEND_ACTIVITY = [
   },
   {
     gameId: "jsnaassdddf",
-    gameName: "No friends game",
+    gameName: "Phasmophobia",
+    gameImage:
+      "https://styles.redditmedia.com/t5_3l0n9/styles/communityIcon_5j29gqeo5hp51.png?width=256&s=0c424dfc6adc629b283cc0c2bd2f20d84aa8fced",
     friends: [
       {
         id: "yes4",

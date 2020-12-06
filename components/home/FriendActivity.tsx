@@ -20,14 +20,15 @@ type Friend = {
 };
 
 const FriendActivity = (props: Props) => {
-  const { gameId, gameName, friends } = props;
+  const { gameId, gameName, friends, gameImage } = props;
   return (
-    <TouchableOpacity>
+    <View>
       <View style={styles.container}>
         <Image
           style={styles.gameImage}
-          // TODO: get from game
-          source={require("../../assets/images/icon.png")}
+          source={{
+            uri: gameImage,
+          }}
         />
         <View style={styles.activityTextContainer}>
           <Text style={styles.gameName}>{gameName}</Text>
@@ -37,9 +38,9 @@ const FriendActivity = (props: Props) => {
             </Text>
           </View>
         </View>
-        <Entypo name="chevron-small-right" size={26} />
+        {/* <Entypo name="chevron-small-right" size={26} /> */}
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
