@@ -15,9 +15,14 @@ const GameSuggestionContainer = () => {
   const navigation = useNavigation();
   const [games, setGames] = useState([]);
   async function getGameDetails(appId: number) {
-    const response = await axios.get(
-      `http://store.steampowered.com/api/appdetails?appids=${appId}&cc=au&l=en`,
-    );
+    let response;
+    try {
+      response = await axios.get(
+        `http://store.steampowered.com/api/appdetails?appids=${appId}&cc=au&l=en`,
+      );
+    } catch (err) {
+      console.log(err);
+    }
     setGames((prevState) => [
       ...prevState,
       extractGameRequestData(response.data),
@@ -75,7 +80,7 @@ const GameSuggestionContainer = () => {
         })}
       </ScrollView>
       <View style={styles.viewAllContainer}>
-        <Button text="See all ›" />
+        <Button onPress={() => navigation.navigate("Games")} text="See all ›" />
       </View>
     </View>
   );
