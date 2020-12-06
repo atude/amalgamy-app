@@ -16,4 +16,3 @@
 - Messaging friends
 - Bookmarking games
 - Sharing games
-

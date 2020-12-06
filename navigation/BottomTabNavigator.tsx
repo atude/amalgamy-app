@@ -243,7 +243,7 @@ function ProfileNavigator() {
         name="SavedGames"
         component={savedGamesScreen}
         options={{
-          headerTitle: "Saved Games",
+          headerTitle: "Bookmarked Games",
           headerTitleAlign: "left",
           headerTitleStyle: styles.headerText,
           headerStyle: styles.headerContainer,

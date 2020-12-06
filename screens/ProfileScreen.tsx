@@ -20,7 +20,7 @@ const OPTIONS: Option[] = [
     icon: "md-settings",
   },
   {
-    optionText: "Saved Games",
+    optionText: "Bookmarked Games",
     pageLink: "SavedGames",
     icon: "md-bookmarks",
   },
