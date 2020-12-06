@@ -157,7 +157,7 @@ export default function GamePage({ route, navigation }) {
           <></>
         )}
       </View>
-      <Text style={styles.h2}>Accessbility Features</Text>
+      <Text style={styles.h2}>Accessibility Features</Text>
       <View style={{ marginBottom: 24 }}>
         {pickAccFeatures().map((feature: string) => {
           return (
